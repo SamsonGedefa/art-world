@@ -1,4 +1,4 @@
-import { SignUp } from "../page-components/Auth";
+import SignUp from "@/components/SignUp";
 import Head from "next/head";
 
 const SignupPage = () => {

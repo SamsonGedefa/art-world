@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { connectToDatabase } from "../../../api-lib/middleware/database";
+import connectToDatabase from "@/lib/middleware/database";
 import { compare } from "bcrypt";
-import { findUserByEmail } from "../../../api-lib/db/user";
+import { findUserByEmail } from "../../../lib/db/user";
 
 export default NextAuth({
   providers: [
@@ -36,12 +36,10 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       user && (token.user = user);
-      console.log(user);
       return token;
     },
     async session({ session, token }) {
       session.user = token.user;
-      // console.log("Session:" + session.user.email);
       return session;
     },
   },
