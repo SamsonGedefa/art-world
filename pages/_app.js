@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import Layout from "../components/layout/Layout";
+import Layout from "@/components/Layout";
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,5 +14,3 @@ export default function MyApp({ Component, pageProps }) {
     </SessionProvider>
   );
 }
-
-MyApp;

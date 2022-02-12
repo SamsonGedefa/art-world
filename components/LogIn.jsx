@@ -2,10 +2,9 @@ import React, { useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import styles from "./Login.module.css";
 import { signIn } from "next-auth/react";
-import { Wrapper } from "../../components/layout";
 import { toast } from "react-toastify";
 
-const LogIn = () => {
+export default function LogIn() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -45,25 +44,21 @@ const LogIn = () => {
   }
 
   return (
-    <Wrapper className={styles.root}>
-      <div className={styles.main}>
-        <h1>Login</h1>
-        <form onSubmit={submit}>
-          <div className={styles.control}>
-            <label htmlFor="email">Your Email</label>
-            <input type="email" id="email" required ref={emailRef} />
-          </div>
-          <div className={styles.control}>
-            <label htmlFor="password">Your Password</label>
-            <input type="password" id="password" required ref={passwordRef} />
-          </div>
-          <div className={styles.actions}>
-            <button>Sign In</button>
-          </div>
-        </form>
-      </div>
-    </Wrapper>
+    <div className={styles.main}>
+      <h1>Login</h1>
+      <form onSubmit={submit}>
+        <div className={styles.control}>
+          <label htmlFor="email">Your Email</label>
+          <input type="email" id="email" required ref={emailRef} />
+        </div>
+        <div className={styles.control}>
+          <label htmlFor="password">Your Password</label>
+          <input type="password" id="password" required ref={passwordRef} />
+        </div>
+        <div className={styles.actions}>
+          <button>Sign In</button>
+        </div>
+      </form>
+    </div>
   );
-};
-
-export default LogIn;
+}

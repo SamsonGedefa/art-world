@@ -1,13 +1,12 @@
 import React, { useCallback, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import styles from "./Login.module.css";
-import { Wrapper } from "../../components/layout";
-import { fetcher } from "../../lib/fetch";
-import { useCurrentUser } from "../../lib/user";
+import { fetcher } from "@/lib/fetch";
+import { useCurrentUser } from "@/lib/user";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SignUp = () => {
+export default function SignUp() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
@@ -52,39 +51,35 @@ const SignUp = () => {
   }
 
   return (
-    <Wrapper className={styles.root}>
-      <div className={styles.main}>
-        <h1>Sign Up</h1>
-        <form onSubmit={onSubmit}>
-          <div className={styles.control}>
-            <label htmlFor="email">Your Email</label>
-            <input type="email" id="email" required ref={emailRef} />
-          </div>
-          <div className={styles.control}>
-            <label htmlFor="password">Your Password</label>
-            <input type="password" id="password" required ref={passwordRef} />
-          </div>
-          <div className={styles.control}>
-            <label htmlFor="username">Pick your Username</label>
-            <input
-              type="text"
-              id="username"
-              required
-              ref={usernameRef}
-              required
-            />
-          </div>
-          <div className={styles.control}>
-            <label htmlFor="name">Full Name</label>
-            <input type="text" id="name" required ref={nameRef} required />
-          </div>
-          <div className={styles.actions}>
-            <button>Create Account</button>
-          </div>
-        </form>
-      </div>
-    </Wrapper>
+    <div className={styles.main}>
+      <h1>Sign Up</h1>
+      <form onSubmit={onSubmit}>
+        <div className={styles.control}>
+          <label htmlFor="email">Your Email</label>
+          <input type="email" id="email" required ref={emailRef} />
+        </div>
+        <div className={styles.control}>
+          <label htmlFor="password">Your Password</label>
+          <input type="password" id="password" required ref={passwordRef} />
+        </div>
+        <div className={styles.control}>
+          <label htmlFor="username">Pick your Username</label>
+          <input
+            type="text"
+            id="username"
+            required
+            ref={usernameRef}
+            required
+          />
+        </div>
+        <div className={styles.control}>
+          <label htmlFor="name">Full Name</label>
+          <input type="text" id="name" required ref={nameRef} required />
+        </div>
+        <div className={styles.actions}>
+          <button>Create Account</button>
+        </div>
+      </form>
+    </div>
   );
-};
-
-export default SignUp;
+}

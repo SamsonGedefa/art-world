@@ -1,8 +1,3 @@
-/*
-    Classes create here should only be used to style the LogIn componenet
-    Class can be applied to React element by specifing the className property and passing the class name like {clases.root}
-    https://github.com/css-modules/css-modules
-*/
 
 .root {
     display: flex;
@@ -21,6 +16,7 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     padding: 1rem;
     text-align: center;
+    max-height: 450px;
   }
   
   .main h1 {

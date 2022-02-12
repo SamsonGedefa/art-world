@@ -1,9 +1,5 @@
 import isEmail from "validator/lib/isEmail";
-import {
-  insertUser,
-  findUserByEmail,
-  findUserByUsername,
-} from "../../../api-lib/db/user";
+import { insertUser, findUserByEmail, findUserByUsername } from "@/lib/user";
 
 async function handler(req, res) {
   if (req.method !== "POST") {

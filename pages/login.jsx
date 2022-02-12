@@ -1,4 +1,4 @@
-import { LogIn } from "../page-components/Auth";
+import LogIn from "@/components/LogIn";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
