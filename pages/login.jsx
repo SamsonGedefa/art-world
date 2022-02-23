@@ -1,16 +1,8 @@
-import LogIn from "@/components/LogIn";
+import LogIn from "../page-components/LogIn";
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { getSession, useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import { getProviders } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 const LoginPage = () => {
-  const { data: session, loading } = useSession();
-
-  if (session) {
-    return <div>{session.user.email}</div>;
-  }
   return (
     <>
       <Head>
@@ -23,22 +15,17 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-// export async function getServerSideProps(ctx) {
-//   // const { req } = ctx;
-
-//   const session = await getSession({ req: ctx.req });
-//   const providers = await getProviders();
-//   console.log("Providers", providers);
-
-//   if (session) {
-//     return {
-//       redirect: { destination: "/" },
-//     };
-//   }
-
-//   return {
-//     props: {
-//       session,
-//     },
-//   };
-// }
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

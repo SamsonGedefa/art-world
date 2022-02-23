@@ -24,11 +24,12 @@ export default function LogIn() {
       }).then((response) => {
         if (response.error) {
           toast.error(response.error, { autoClose: 2000 });
+          return;
         }
         if (response.ok) {
           setIsLoading(false);
           toast.success(response.ok);
-          // router.replace("/login");
+          router.push("/");
         }
       });
     } catch (error) {
@@ -44,21 +45,23 @@ export default function LogIn() {
   }
 
   return (
-    <div className={styles.main}>
-      <h1>Login</h1>
-      <form onSubmit={submit}>
-        <div className={styles.control}>
-          <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" required ref={emailRef} />
-        </div>
-        <div className={styles.control}>
-          <label htmlFor="password">Your Password</label>
-          <input type="password" id="password" required ref={passwordRef} />
-        </div>
-        <div className={styles.actions}>
-          <button>Sign In</button>
-        </div>
-      </form>
+    <div className={styles.root}>
+      <div className={styles.main}>
+        <h1>Login</h1>
+        <form onSubmit={submit}>
+          <div className={styles.control}>
+            <label htmlFor="email">Your Email</label>
+            <input type="email" id="email" required ref={emailRef} />
+          </div>
+          <div className={styles.control}>
+            <label htmlFor="password">Your Password</label>
+            <input type="password" id="password" required ref={passwordRef} />
+          </div>
+          <div className={styles.actions}>
+            <button>Sign In</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
