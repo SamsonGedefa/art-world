@@ -4,19 +4,25 @@ import ImageList from "@/components/Image";
 import { AiTwotoneCamera } from "react-icons/ai";
 import { BiShocked } from "react-icons/bi";
 import { signOut, useSession } from "next-auth/react";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
+import { updatePostState } from "../atoms/postAtom";
+import axios from "axios";
+import useSWR, { useSWRConfig } from "swr";
+import { usePostPages } from "../lib/post";
 
-export default function PostForm({ removePostForm }) {
+export default function PostForm() {
   const [files, setFiles] = useState([]);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [input, setInput] = useState("");
-  const [display, setDisplay] = useState(false);
-
-  const { data: session } = useSession();
+  const [content, setContent] = useState("");
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [handlePost, setHandlePost] = useRecoilState(updatePostState);
+  const { mutate } = usePostPages();
 
   const uploadFile = useCallback(
     async (e) => {
-      e.preventDefault({ setDisplay });
+      e.preventDefault();
 
       if (!files) {
         toast("No file selected");
@@ -28,29 +34,29 @@ export default function PostForm({ removePostForm }) {
         formData.append(i, file);
       });
 
-      try {
-        let request = await fetch("/api/auth/post", {
-          method: "post",
-          body: formData,
-        });
-        const response = await request.json();
+      formData.append("content", content);
 
-        console.log("Response", response);
+      try {
+        await axios.post("/api/auth/post", formData, {
+          headers: { "content-type": "multipart/form-data" },
+        });
+        mutate(); // refreshs post as it's bounded to the SWR key
       } catch (err) {
         toast.error(err);
+      } finally {
+        setLoading(false);
+        setModalOpen(false);
+        setHandlePost(true);
       }
-
-      setLoading(false);
-      removePostForm();
     },
-    [files, images]
+    [files, images, mutate]
   );
 
-  useEffect(() => {
-    if (images) {
-      images.forEach((img) => console.log("IMAGES " + img));
-    }
-  }, [images?.length]);
+  // useEffect(() => {
+  //   if (images) {
+  //     images.forEach((img) => console.log("IMAGES " + img));
+  //   }
+  // }, [images?.length]);
 
   useEffect(() => {
     let objectURL = "";
@@ -63,6 +69,10 @@ export default function PostForm({ removePostForm }) {
   }, [files]);
 
   function selectedFile(e) {
+    if (e.target.files.length > 4) {
+      toast("Please only select upto 4 files");
+      return;
+    }
     const fileArr = Array.from(e.target.files);
     setFiles(fileArr);
   }
@@ -81,21 +91,26 @@ export default function PostForm({ removePostForm }) {
         src="default_user.jpg"
         alt=""
         className="h-11 w-11 rounded-full cursor-pointer"
-        onClick={signOut}
       />
 
       <form onSubmit={uploadFile} className="divide-y divide-gray-700 w-full">
-        <div className={`${images && "pb-7"} ${input && "space-y-2.5"}`}>
+        <div className={`${images && "pb-7"} ${content && "space-y-2.5"}`}>
           <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={content}
+            name="content"
+            onChange={(e) => setContent(e.target.value)}
             placeholder="Share your work..."
             rows="2"
             className="bg-transparent outline-none text-[#d9d9d9] text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px]"
           />
 
           {images.length > 0 ? (
-            <div className="grid grid-cols-2 gap-2 grid-rows-2 w-3/4 h-80">
+            // grid grid-cols-2 gap-2 grid-rows-2 w-3/4 h-80
+            <div
+              className={`space-y-2 ${
+                images.length == 1 ? "columns-1xl" : "columns-2"
+              } `}
+            >
               <ImageList images={images} removeImage={removeImage} />
             </div>
           ) : (
@@ -125,7 +140,7 @@ export default function PostForm({ removePostForm }) {
             </div>
             <button
               className="bg-[#e65a5a] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
-              disabled={!input && !files}
+              disabled={!content && !files}
               onClick={() => {
                 uploadFile;
               }}
@@ -138,21 +153,3 @@ export default function PostForm({ removePostForm }) {
     </div>
   );
 }
-
-// export default function AddPost() {
-//   const [display, setDisplay] = useState(false);
-//   return (
-//     <div>
-//       <button
-//         className="bg-[#e65a5a] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
-//         // disabled={display}
-//         hidden={display}
-//         onClick={() => setDisplay(true)}
-//       >
-//         Share
-//       </button>
-
-//       {display && <PostForm />}
-//     </div>
-//   );
-// }

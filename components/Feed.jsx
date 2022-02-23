@@ -1,54 +1,74 @@
 import { useEffect, useState } from "react";
-
 import PostForm from "@/components/PostForm";
 import Post from "@/components/Post";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { motion, AnimatePresence } from "framer-motion";
+import Modal from "./Modal";
+import Nav from "../components/Nav";
+import { useRecoilState } from "recoil";
+import { modalState } from "../atoms/modalAtom";
+import { usePostPages } from "../lib/post";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
-function Feed() {
-  const [display, setDisplay] = useState(false);
+export default function Feed() {
+  const [modalOpen, setModalOpen] = useRecoilState(modalState);
 
-  const removeDisplay = (bool) => {
-    setDisplay(bool);
+  const { data: session } = useSession();
+
+  const handleClose = () => {
+    setModalOpen(false);
   };
-  return (
-    <div className="flex-grow border-l border-r border-gray-700  sm:ml-[73px] xl:ml-[370px]">
-      <div className="text-[#d9d9d9] flex items-center sm:justify-between py-2 px-3 sticky top-0 z-50 bg-black border-b border-gray-700">
-        <h2 className="text-lg sm:text-xl font-bold">Home</h2>
 
-        <div className="hoverAnimation w-9 h-9 flex items-center justify-center xl:px-0 ml-auto">
-          {/* <SparklesIcon className="h-5 text-white" /> */}
-        </div>
+  const { data, error, size, setSize, isLoadingMore, isReachingEnd } =
+    usePostPages();
+
+  if (error) return <div className="text-white">Failed to load</div>;
+  if (!data) return <div className="text-white">Loading...</div>;
+
+  const posts = data
+    ? data.reduce((acc, val) => [...acc, ...val.posts], [])
+    : [];
+
+  return (
+    // <div
+    //   className={`flex-grow border-l border-r border-gray-700 ${
+    //     session && "sm:ml-[73px] xl:ml-[245px]"
+    //   }`}
+    // >
+    <div className="flex-grow border-l border-r border-gray-700 max-w-full sm:ml-[73px] xl:ml-[250px] px-10">
+      {modalOpen && <Modal handleClose={handleClose} />}
+      <div className="flex flex-wrap">
+        {posts.map((post) => (
+          <Link
+            key={post._id}
+            href={`/user/${post.creator.username}/post/${post._id}`}
+            passHref
+          >
+            <Post post={post} />
+          </Link>
+          // post.images.length && <Post key={post._id} post={post} />)
+        ))}
+
+        <h1 className="text-white-700"></h1>
       </div>
       <button
-        className="bg-[#e65a5a] m-5 text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
-        // disabled={display}
-        hidden={display}
-        onClick={() => setDisplay(true)}
+        disabled={isLoadingMore || isReachingEnd}
+        onClick={() => setSize(size + 1)}
+        className="bg-[#e65a5a] rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left w-44 h-14 text-center"
       >
-        Add Post
+        {isLoadingMore
+          ? "Loading..."
+          : isReachingEnd
+          ? "No more posts"
+          : "Load more"}
       </button>
-      {display && <PostForm removePostForm={removeDisplay} />}
-      <Post />;
+      {/* <button
+        onClick={() => setSize(size + 1)}
+        className="bg-[#e65a5a] rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left w-44 h-14 text-center"
+      >
+        Load More
+      </button> */}
     </div>
   );
 }
-
-export default Feed;
-
-// export default function AddPost() {
-//   const [display, setDisplay] = useState(false);
-//   return (
-//     <div>
-//       <button
-//         className="bg-[#e65a5a] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
-//         // disabled={display}
-//         hidden={display}
-//         onClick={() => setDisplay(true)}
-//       >
-//         Share
-//       </button>
-
-//       {display && <PostForm />}
-//     </div>
-//   );
-// }
