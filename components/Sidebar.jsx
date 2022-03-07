@@ -1,7 +1,7 @@
 import React from "react";
 import Tab from "@/components/Tab";
 import Image from "next/image";
-import { FaCommentDots, FaUser } from "react-icons/fa";
+import { FaCommentDots, FaUser, FaUniversalAccess} from "react-icons/fa";
 import { BiHome } from "react-icons/bi";
 import { HiHome } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
@@ -39,9 +39,9 @@ export default function Sidebar() {
         <h1 className="text-white">@samsn</h1>
       </div> */}
 
-      <div className="flex items-center justify-center w-14 h-14 hoverAnimation  ">
+      {/* <div className="flex items-center justify-center w-14 h-14 hoverAnimation  ">
         <Image src="/user_user.jpg" width={30} height={30} />
-      </div>
+      </div> */}
       {session ? (
         <>
           <nav className="space-y-4 mt-4 mb-2.5 ">
@@ -80,16 +80,35 @@ export default function Sidebar() {
           </motion.button>
         </>
       ) : (
-        <div onClick={() => router.push("/login")} className="text-white">
+        <div>
+          <button onClick={() => router.push("/login")} className="hidden xl:inline ml-auto bg-[#e65a5a] text-white rounded-full w-56 h-[52px] text-lg font-bold shadow-md hover:bg-[#1a8cd8]">
           Sign In
-        </div>
-      )}
+        </button>
+        <nav className="space-y-4 mt-4 mb-2.5 ">
+            <Tab
+              href="/?tabHome=true"
+              text="Home"
+              Icon={HiHome}
+              isSelected={isTabOneSelected}
+            />
+            <Tab
+              href="/?tabProfile=true"
+              text="About"
+              Icon={FaUniversalAccess}
+              isSelected={isTabThreeSelected}
+            />
+            {/* <Link text="Messages" Icon={FaCommentDots} path="/messages" />
+            <Link text="Profile" Icon={FaUser} path="/profile" /> */}
 
+          </nav>
+        
+        </div>)
+      }
       {/* <button className="hidden xl:inline ml-auto bg-[#e65a5a] text-white rounded-full w-56 h-[52px] text-lg font-bold shadow-md hover:bg-[#1a8cd8]">
         Post
       </button> */}
       <div className="text-[#d9d9d9] flex items-center justify-center mt-auto hoverAnimation  xl:-mr-5">
-        <h1 className="text-white ">Art World</h1>
+        <Image src="/logo.png" height={100} width={100} alt="Art World Logo"/>
       </div>
     </div>
   );
