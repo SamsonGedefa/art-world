@@ -1,6 +1,6 @@
-import { useEffect, useState, useLayoutEffect } from "react";
-import { Post } from "@/components/Post";
+import React from "react";
 
+import { Post } from "@/components/Post";
 import { usePostPages } from "../lib/post";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ export default function Feed() {
 
   return (
     <div className="flex-grow h-full px-10 bg-[#0E1016]">
-      <div className="flex flex-wrap">
+      <ul className="flex flex-wrap space-x-2 space-y-2">
         {posts.map((post) => (
           <Link
             key={post._id}
@@ -32,7 +32,8 @@ export default function Feed() {
         ))}
 
         <h1 className="text-white-700"></h1>
-      </div>
+      </ul>
+
       <button
         disabled={isLoadingMore || isReachingEnd}
         onClick={() => setSize(size + 1)}
