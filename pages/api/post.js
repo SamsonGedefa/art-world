@@ -1,6 +1,6 @@
 import cloudinary from "cloudinary";
 import { IncomingForm } from "formidable";
-import { insertPost, getPost } from "../../../lib/db/post";
+import { insertPost, getPost } from "@/lib/db/post";
 import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
 cloudinary.config({

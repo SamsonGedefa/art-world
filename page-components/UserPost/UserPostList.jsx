@@ -1,10 +1,10 @@
-import { usePostPages } from "../lib/post";
+import { usePostPages } from "../../lib/post";
 import Link from "next/link";
-import Post from "../components/Post";
+import { Post } from "@/components/Post";
 
-export default function UserPosts({ user }) {
+export default function UserPostList({ user }) {
   const { data, size, setSize, isLoadingMore, isReachingEnd } = usePostPages({
-    creatorId: user._Id,
+    creatorId: user._id,
   });
   console.log("UserPosts", data);
 
@@ -29,14 +29,3 @@ export default function UserPosts({ user }) {
     </div>
   );
 }
-
-// {posts.map((post) => (
-//     <Link
-//       key={post._id}
-//       href={`/user/${post.creator.username}/post/${post._id}`}
-//     >
-//       <a className={styles.wrap}>
-//         <Post className={styles.post} post={post} />
-//       </a>
-//     </Link>
-//   ))}

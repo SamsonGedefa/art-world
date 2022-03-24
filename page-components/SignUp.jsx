@@ -1,10 +1,9 @@
 import React, { useCallback, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import styles from "./Login.module.css";
-import { fetcher } from "@/lib/fetch";
-import { useCurrentUser } from "@/lib/user";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export default function SignUp() {
   const emailRef = useRef();
@@ -19,20 +18,22 @@ export default function SignUp() {
   const onSubmit = useCallback(async (e) => {
     e.preventDefault();
 
+    const data = JSON.stringify({
+      email: emailRef.current.value,
+      name: nameRef.current.value,
+      password: passwordRef.current.value,
+      username: usernameRef.current.value,
+    });
+
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
     try {
       setIsLoading(true);
-      const response = await fetcher("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: emailRef.current.value,
-          name: nameRef.current.value,
-          password: passwordRef.current.value,
-          username: usernameRef.current.value,
-        }),
-      });
-
-      console.log("Account is created");
+      const response = await axios.post("/api/auth/signup", data, axiosConfig);
       router.push("/");
     } catch (e) {
       toast.error(e.message, { autoClose: 1000 });

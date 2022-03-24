@@ -11,7 +11,7 @@ export default function FeedLayout({ children }) {
         <Feed />
       </div>
 
-      <main className="flex">{children}</main>
+      <main className="">{children}</main>
     </>
   );
 }

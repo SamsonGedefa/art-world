@@ -11,7 +11,7 @@ export default function Home({ posts }) {
       <Head>
         <title>Home / Art-World</title>
       </Head>
-      {/* <Feed posts={posts} /> */}
+      <Feed />
     </>
   );
 }
@@ -46,9 +46,5 @@ export async function getServerSideProps(context) {
 }
 
 Home.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      <FeedLayout>{page}</FeedLayout>
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
