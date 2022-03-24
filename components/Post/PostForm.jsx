@@ -1,15 +1,13 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import ImageList from "@/components/Image";
+import ImageList from "./Image";
 import { AiTwotoneCamera } from "react-icons/ai";
 import { BiShocked } from "react-icons/bi";
-import { signOut, useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
-import { modalState } from "../atoms/modalAtom";
-import { updatePostState } from "../atoms/postAtom";
+import { modalState } from "../../atoms/modalAtom";
+import { updatePostState } from "../../atoms/postAtom";
 import axios from "axios";
-import useSWR, { useSWRConfig } from "swr";
-import { usePostPages } from "../lib/post";
+import { usePostPages } from "@/lib/post";
 
 export default function PostForm() {
   const [files, setFiles] = useState([]);
@@ -37,7 +35,7 @@ export default function PostForm() {
       formData.append("content", content);
 
       try {
-        await axios.post("/api/auth/post", formData, {
+        await axios.post("/api/post", formData, {
           headers: { "content-type": "multipart/form-data" },
         });
         mutate(); // refreshs post as it's bounded to the SWR key
@@ -51,12 +49,6 @@ export default function PostForm() {
     },
     [files, images, mutate]
   );
-
-  // useEffect(() => {
-  //   if (images) {
-  //     images.forEach((img) => console.log("IMAGES " + img));
-  //   }
-  // }, [images?.length]);
 
   useEffect(() => {
     let objectURL = "";
@@ -83,7 +75,7 @@ export default function PostForm() {
 
   return (
     <div
-      className={`border-b max-w-2xl border-gray-700 p-3 flex space-x-3  scrollbar-hide ${
+      className={` max-w-2xl  p-3 flex space-x-3  scrollbar-hide ${
         loading && "opacity-60"
       }`}
     >
@@ -101,10 +93,10 @@ export default function PostForm() {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Share your work..."
             rows="2"
-            className="bg-transparent outline-none text-[#d9d9d9] text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px]"
+            className="bg-transparent outline-none text-[#d9d9d9] text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px] resize-none"
           />
 
-          {images.length > 0 ? (
+          {images.length > 0 && (
             // grid grid-cols-2 gap-2 grid-rows-2 w-3/4 h-80
             <div
               className={`space-y-2 ${
@@ -113,8 +105,6 @@ export default function PostForm() {
             >
               <ImageList images={images} removeImage={removeImage} />
             </div>
-          ) : (
-            <div>...</div>
           )}
         </div>
         {!loading && (
@@ -122,7 +112,7 @@ export default function PostForm() {
             <div className="flex items-center">
               <div className="icon">
                 <label htmlFor="fileInput">
-                  <AiTwotoneCamera size={25} className="text-[#e65a5a]" />
+                  <AiTwotoneCamera size={25} className="text-[#e65a5a] " />
                 </label>
                 <input
                   id="fileInput"
@@ -134,7 +124,10 @@ export default function PostForm() {
                 />
               </div>
 
-              <div className="icon" onClick={() => setShowEmojis(!showEmojis)}>
+              <div
+                className="icon"
+                // onClick={() => setShowEmojis(!showEmojis)
+              >
                 <BiShocked size={25} className="text-[#e65a5a]" />
               </div>
             </div>

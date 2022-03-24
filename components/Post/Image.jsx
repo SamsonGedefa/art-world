@@ -1,7 +1,7 @@
 import React from "react";
 import { FiX } from "react-icons/fi";
 
-export default (props) =>
+const ImageList = (props) =>
   props.images.map((image, i) => (
     <div key={i} className="relative max-h-full max-w-full h-30 w-30">
       <div
@@ -13,3 +13,4 @@ export default (props) =>
       <img src={image} className="rounded-2xl object-cover h-full w-full" />
     </div>
   ));
+export default ImageList;

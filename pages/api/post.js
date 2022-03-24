@@ -1,6 +1,6 @@
 import cloudinary from "cloudinary";
 import { IncomingForm } from "formidable";
-import { insertPost, getPost } from "../../../lib/db/post";
+import { insertPost, getPost } from "@/lib/db/post";
 import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
 cloudinary.config({
@@ -22,8 +22,6 @@ export default async (req, res) => {
   //   console.log("POST_API: ", session.user);
   // }
 
-  console.log("BY", req.query.by);
-
   if (req.method === "GET") {
     try {
       const posts = await getPost(
@@ -32,7 +30,6 @@ export default async (req, res) => {
         req.query.limit ? parseInt(req.query.limit, 10) : undefined
       );
       res.json({ posts });
-      console.log("POST", posts);
     } catch (error) {
       res.json({ error });
     }

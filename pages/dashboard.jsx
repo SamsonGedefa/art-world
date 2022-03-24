@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 
-import PostForm from "@/components/PostForm";
+import { PostForm } from "@/components/Post";
 
 export default function Dashboard() {
   return (

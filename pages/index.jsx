@@ -1,18 +1,18 @@
 import Head from "next/head";
 import Image from "next/image";
-import Feed from "@/components/Feed";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "@/lib/middleware/database";
 import { Layout, FeedLayout } from "../components/Layout";
+import Feed from "@/components/Feed";
 
 export default function Home({ posts }) {
   return (
-    <>
+    <div className="min-h-screen">
       <Head>
         <title>Home / Art-World</title>
       </Head>
-      {/* <Feed posts={posts} /> */}
-    </>
+      <Feed />
+    </div>
   );
 }
 
@@ -46,9 +46,5 @@ export async function getServerSideProps(context) {
 }
 
 Home.getLayout = function getLayout(page) {
-  return (
-    <Layout>
-      <FeedLayout>{page}</FeedLayout>
-    </Layout>
-  );
+  return <Layout>{page}</Layout>;
 };
