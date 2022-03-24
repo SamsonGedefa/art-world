@@ -1,13 +1,9 @@
 import React from "react";
-
 import { Post } from "@/components/Post";
 import { usePostPages } from "../lib/post";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export default function Feed() {
-  const { data: session } = useSession();
-
   const { data, error, size, setSize, isLoadingMore, isReachingEnd } =
     usePostPages();
 
