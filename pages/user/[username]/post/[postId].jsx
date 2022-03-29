@@ -1,26 +1,22 @@
 import Head from "next/head";
 import UserPost from "@/page-components/PostView";
 import { findPostById } from "../../../../lib/db/post";
-import { useRouter } from "next/router";
 import { Layout } from "@/components/Layout";
-import Widgets from "@/components/Widget";
-export default function UserPostPage({ post }) {
-  const { query } = useRouter();
 
+export default function UserPostPage({ post }) {
   if (typeof post.createdAt !== "string") {
     post.createdAt = new Date(post.createdAt);
   }
   return (
-    <div className="flex-grow flex">
+    <>
       <Head>
         <title>{post.userId}</title>
       </Head>
       <UserPost post={post} />
-      {/* <Widgets /> */}
-    </div>
+    </>
   );
 }
-// bg-[#06070D]
+
 export async function getServerSideProps(context) {
   const { postId } = context.params;
 
@@ -31,8 +27,6 @@ export async function getServerSideProps(context) {
       notFound: true,
     };
   }
-
-  console.log("POST_ID", post._id);
 
   if (context.params.username !== post.creator.username) {
     return {

@@ -15,7 +15,7 @@ export default function Feed() {
     : [];
 
   return (
-    <div className="flex-grow h-full px-10 bg-[#0E1016]">
+    <div className="flex-grow h-full px-10 ">
       <ul className="flex flex-wrap space-x-2 space-y-2">
         {posts.map((post) => (
           <Link
