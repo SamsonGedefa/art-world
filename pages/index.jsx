@@ -1,13 +1,11 @@
 import Head from "next/head";
-import Image from "next/image";
-import { getSession } from "next-auth/react";
 import { connectToDatabase } from "@/lib/middleware/database";
-import { Layout, FeedLayout } from "../components/Layout";
+import { Layout } from "../components/Layout";
 import Feed from "@/components/Feed";
 
 export default function Home({ posts }) {
   return (
-    <div className="min-h-screen">
+    <div className="h-full">
       <Head>
         <title>Home / Art-World</title>
       </Head>
@@ -17,16 +15,6 @@ export default function Home({ posts }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       permanent: false,
-  //       destination: "/",
-  //     },
-  //   };
-  // }
-
   const { db } = await connectToDatabase();
   const posts = await db
     .collection("posts")

@@ -15,13 +15,4 @@ export default function MyApp({ Component, pageProps }) {
       </RecoilRoot>
     </SessionProvider>
   );
-
-  // return getLayout(
-  //   <SessionProvider session={pageProps.session}>
-  //     <RecoilRoot>
-  //       <Component {...pageProps} />
-  //       <ToastContainer />
-  //     </RecoilRoot>
-  //   </SessionProvider>
-  // );
 }

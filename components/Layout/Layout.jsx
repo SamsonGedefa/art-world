@@ -12,15 +12,15 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative w-screen">
       {modalOpen && <Modal handleClose={handleClose} />}
 
       <Nav />
 
-      <div className="h-screen flex flex-col md:flex-row flex-1">
+      <div className="flex flex-col md:flex-row flex-1">
         <Sidebar />
 
-        <main className="flex-1 w-full ml-20">{children}</main>
+        <main className="flex-1 ml-20 bg-[#0E1016]">{children}</main>
       </div>
     </div>
   );
