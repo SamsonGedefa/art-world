@@ -21,15 +21,13 @@ function Post({ post }) {
 
   return (
     <Link href={`/user/${post.creator.username}/post/${post._id}`}>
-      <a>
-        <li className="relative h-60 flex-grow group overflow-hidden shadow-lg ">
+        <li className="relative md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-auto flex-grow group overflow-hidden shadow-lg ">
           <img
-            className=" max-w-full max-h-full object-cover align-bottom group-hover:opacity-70"
+            className="h-60 w-full object-cover align-bottom group-hover:opacity-50"
             src={post.images}
           />
-
-          <div className="hidden group-hover:block  duration-300 absolute inset-x-0 bottom-0  h-full px-6 py-4 ">
-            <div className="absolute bottom-0 left-0  ">
+          <div className="hidden absolute bottom-3 left-0 group-hover:block duration-300 inset-x-0 bottom-0 px-6 py-4 ">
+            <div className="">
               <Link href={`/user/${post.creator.username}`}>
                 <div className="flex items-center justify-center w-14 h-14 hoverAnimation ">
                   <Image src="/user_user.jpg" width={30} height={30} />
@@ -42,7 +40,7 @@ function Post({ post }) {
                 </a>
               </Link>
             </div>
-            <div className="absolute bottom-0 right-0">
+            <div className="absolute bottom-10 right-5">
               <div
                 onClick={(e) => {
                   e.preventDefault(), alert("Liked");
@@ -60,7 +58,6 @@ function Post({ post }) {
             </div>
           </div>
         </li>
-      </a>
     </Link>
   );
 }

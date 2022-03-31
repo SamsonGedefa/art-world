@@ -17,17 +17,15 @@ export default function Feed() {
   return (
     <div className="flex-grow h-full px-10 ">
       <ul className="flex flex-wrap space-x-2 space-y-2">
-        {posts.map((post) => (
-          <Link
-            key={post._id}
-            href={`/user/${post.creator.username}/post/${post._id}`}
-            passHref
-          >
-            <Post post={post} />
-          </Link>
-        ))}
-
-        <h1 className="text-white-700"></h1>
+          {posts.map((post) => (
+              <Link
+                key={post._id}
+                href={`/user/${post.creator.username}/post/${post._id}`}
+                passHref
+              >
+                <Post post={post} />
+              </Link>
+          ))}
       </ul>
 
       <button
