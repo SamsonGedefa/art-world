@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import Link from "next/link";
@@ -6,9 +6,12 @@ import Image from "next/image";
 import { AiFillDislike, AiFillLike } from "react-icons/ai";
 import { BsHeartFill } from "react-icons/bs";
 import { FaRegCommentAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function Post({ post }) {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
+  const [isLoading, setIsLoading] = useState(false);
 
   const deletePost = async () => {
     const response = await fetch(`/api/posts/${post._id}`, {
@@ -19,9 +22,25 @@ function Post({ post }) {
     setModalOpen(false);
   };
 
+  const handleLike = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      await axios.put(`/api/post/${post._id}/likes`, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      toast.success("You have like the post");
+    } catch (e) {
+      toast.error(e.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   return (
     <Link href={`/user/${post.creator.username}/post/${post._id}`}>
-      <li className="relative md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-auto flex-grow group overflow-hidden shadow-lg cursor-pointer">
+      <li className="relative md:basis-1/3 lg:basis-1/4 xl:basis-auto 2xl:basis-auto flex-grow group overflow-hidden shadow-lg cursor-pointer">
         <img
           className="h-60 w-full object-cover align-bottom group-hover:opacity-50"
           src={post.images}
@@ -50,7 +69,7 @@ function Post({ post }) {
             </div>
             <div
               onClick={(e) => {
-                e.preventDefault(), alert("Liked");
+                e.preventDefault(), handleLike();
               }}
             >
               <BsHeartFill className="h-5 w-5 text-slate-500 hover:text-white" />
