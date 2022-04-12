@@ -13,19 +13,21 @@ export default function UserPostList({ user }) {
     : [];
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex-grow h-full px-10 ">
+      <ul className="flex flex-wrap space-x-2 space-y-2">
       {posts.map((post) => (
-        <Link
-          key={post._id}
-          href={`/user/${post.creator.username}/${post._id}`}
-        >
-          <a>
-            <Post post={post} />
-          </a>
-        </Link>
+          <li className="relative md:basis-1/2 lg:basis-1/3 xl:basis-1/4 2xl:basis-auto flex-grow group overflow-hidden shadow-lg ">
+            <Link
+              key={post._id}
+              href={`/user/${post.creator.username}/${post._id}`}
+            >
+              <a>
+                <Post post={post} />
+              </a>
+            </Link>
+          </li>
       ))}
-
-      <h1 className="text-white-700"></h1>
+      </ul>
     </div>
   );
 }
