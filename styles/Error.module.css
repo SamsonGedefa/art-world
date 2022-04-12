@@ -1,0 +1,27 @@
+.container {
+    min-height: 100vh;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.705) ;
+  }
+
+.bold {
+    text-transform: uppercase;
+    font-size: x-large;
+    color: white;
+}
+
+.return {
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: larger;
+    color: #07bc0c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
