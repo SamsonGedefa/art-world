@@ -15,12 +15,12 @@ import Link from "next/link";
 import { navMenuState } from "../../atoms/navMenuAtom";
 import Backdrop from "./Backdrop";
 import { useEffect } from "react";
-export default function Sidebar() {
-  const { session } = useSession();
 
+export default function Sidebar() {
+  const { data: session } = useSession()
   const { query } = useRouter();
   const router = useRouter();
-
+  
   const isTabOneSelected = !!query.home;
   const isTabTwoSelected = !!query.messages;
   const isTabThreeSelected = !!query.profile;
@@ -30,35 +30,65 @@ export default function Sidebar() {
   useEffect(() => {
     menuOpen && setMenuOpen(false);
   }, [query]);
-  return (
-    <aside
-      className={`fixed flex flex-col items-center w-20 ${
-        menuOpen && "w-60 z-10"
-      }  h-screen bg-[#06070D] text-white border-r border-gray-700`}
-    >
-      <Tab href="/" text="Home" Icon={HiHome} isSelected={isTabOneSelected} />
-      <Tab
-        href="/messages"
-        text="Massages"
-        Icon={FaCommentDots}
-        isSelected={isTabTwoSelected}
-      />
-      <Tab
-        href="/profile"
-        text="Profile"
-        Icon={FaUser}
-        isSelected={isTabThreeSelected}
-      />
-      <div className="w-full border-b border-gray-700"></div>
 
-      <div className={` ${!menuOpen && "hidden"} ml-7 self-start mt-4`}>
-        <button
-          onClick={() => router.push("/signup")}
-          className="bg-[#5dec9e]  text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
-        >
-          Join
-        </button>
-      </div>
-    </aside>
-  );
+  if (session) {
+    return (
+      <aside
+        className={`fixed flex flex-col items-center w-20 ${
+          menuOpen && "w-60 z-10"
+        }  h-screen bg-[#06070D] text-white border-r border-gray-700`}
+      >
+        <Tab href="/" text="Home" Icon={HiHome} isSelected={isTabOneSelected} />
+        <Tab
+          href="/messages"
+          text="Massages"
+          Icon={FaCommentDots}
+          isSelected={isTabTwoSelected}
+        />
+        <Tab
+          href="/profile"
+          text="Profile"
+          Icon={FaUser}
+          isSelected={isTabThreeSelected}
+        />
+        <div className="w-full border-b border-gray-700"></div>
+  
+        <div className={` ${!menuOpen && "hidden"} ml-7 self-start mt-4`}>
+          <button
+            onClick={() => router.push("/signup")}
+            className="bg-[#5dec9e]  text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+          >
+            Join
+          </button>
+        </div>
+      </aside>
+    );
+  } else {
+    return (
+      <aside
+        className={`fixed flex flex-col items-center w-20 ${
+          menuOpen && "w-60 z-10"
+        }  h-screen bg-[#06070D] text-white border-r border-gray-700`}
+      >
+        <Tab href="/" text="Home" Icon={HiHome} isSelected={isTabOneSelected} />
+        <Tab
+          href="/messages"
+          text="Massages"
+          Icon={FaCommentDots}
+          isSelected={isTabTwoSelected}
+        />
+        <div className="w-full border-b border-gray-700"></div>
+        <div className={` ${!menuOpen && "hidden"} ml-7 self-start mt-4`}>
+          <button
+            onClick={() => router.push("/signup")}
+            className="bg-[#5dec9e]  text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+          >
+            Join
+          </button>
+        </div>
+      </aside>
+    );
+  }
+  
+
 }
