@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.4.0",
+    "@xstate/react": "^3.0.0",
     "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.28.1",
@@ -27,7 +28,8 @@
     "react-toastify": "^8.1.1",
     "recoil": "^0.6.1",
     "swr": "^1.2.0",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "xstate": "^4.31.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",

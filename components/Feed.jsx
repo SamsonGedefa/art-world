@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Post } from "@/components/Post";
 import { usePostPages } from "../lib/post";
 import Link from "next/link";
 
 export default function Feed() {
+  const [defer, setDefer] = useState(false);
+
+  useEffect(() => {
+    setDefer(true);
+  }, []);
+
   const { data, error, size, setSize, isLoadingMore, isReachingEnd } =
     usePostPages();
 
@@ -17,14 +23,15 @@ export default function Feed() {
   return (
     <div className="flex-grow h-full px-10 ">
       <ul className="flex flex-wrap space-x-2 space-y-2">
-          {posts.map((post) => (
-              <Link
-                key={post._id}
-                href={`/user/${post.creator.username}/post/${post._id}`}
-                passHref
-              >
-                <Post post={post} />
-              </Link>
+        {defer &&
+          posts.map((post) => (
+            <Link
+              key={post._id}
+              href={`/user/${post.creator.username}/post/${post._id}`}
+              passHref
+            >
+              <Post post={post} />
+            </Link>
           ))}
       </ul>
 
