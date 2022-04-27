@@ -15,6 +15,8 @@ import Link from "next/link";
 import { navMenuState } from "../../atoms/navMenuAtom";
 import Backdrop from "./Backdrop";
 import { useEffect } from "react";
+import { MdCollections } from "react-icons/md";
+
 export default function Sidebar() {
   const { session } = useSession();
 
@@ -47,6 +49,12 @@ export default function Sidebar() {
         href="/profile"
         text="Profile"
         Icon={FaUser}
+        isSelected={isTabThreeSelected}
+      />
+      <Tab
+        href="/library"
+        text="Library"
+        Icon={MdCollections}
         isSelected={isTabThreeSelected}
       />
       <div className="w-full border-b border-gray-700"></div>

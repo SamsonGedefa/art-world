@@ -1,41 +1,40 @@
-import React, { useCallback, useState } from "react";
-import { useRecoilState } from "recoil";
-import { modalState } from "../../atoms/modalAtom";
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useContext,
+  useLayoutEffect,
+} from "react";
+import { GlobalStateContext } from "machines/contexts";
+import { useActor, useMachine } from "@xstate/react";
 import Link from "next/link";
 import Image from "next/image";
-import { AiFillDislike, AiFillLike } from "react-icons/ai";
-import { BsHeartFill } from "react-icons/bs";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
 
 function Post({ post }) {
-  const [modalOpen, setModalOpen] = useRecoilState(modalState);
-  const [isLoading, setIsLoading] = useState(false);
+  const globalService = useContext(GlobalStateContext);
+  const [state, send] = useActor(globalService.likeService);
+  const [loading, setLoading] = useState(false);
 
-  const deletePost = async () => {
-    const response = await fetch(`/api/posts/${post._id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
+  const [liked, setLiked] = useState(false);
+  const [likedList, setLikedList] = useState([]);
 
-    setModalOpen(false);
+  const payload = { postId: post._id };
+
+  const updateState = () => {
+    console.log("LIKE", likedList);
+    setLiked(!liked);
+    globalService.likeService.send("LIKED", payload);
+    console.log("LIKE", likedList);
+
+    // setLiked(() => state.context.likedPosts.includes(post._id));
   };
 
-  const handleLike = useCallback(async () => {
-    try {
-      setIsLoading(true);
-
-      await axios.put(`/api/post/${post._id}/likes`, {
-        headers: { "Content-Type": "application/json" },
-      });
-
-      toast.success("You have like the post");
-    } catch (e) {
-      toast.error(e.message);
-    } finally {
-      setIsLoading(false);
-    }
+  useEffect(() => {
+    setLikedList(state.context.likedPosts);
   }, []);
 
   return (
@@ -59,20 +58,25 @@ function Post({ post }) {
               </a>
             </Link>
           </div>
-          <div className="absolute bottom-10 right-5">
-            <div
-              onClick={(e) => {
-                e.preventDefault(), alert("Liked");
-              }}
-            >
-              <FaRegCommentAlt className="h-5 w-5 text-slate-500 hover:text-white" />
+          <div className="absolute bottom-5 right-5 space-y-2">
+            <div>
+              <Link href={`/user/${post.creator.username}/post/${post._id}`}>
+                <FaRegCommentAlt className="h-5 w-5 text-slate-500 hover:text-white" />
+              </Link>
             </div>
+
             <div
               onClick={(e) => {
-                e.preventDefault(), handleLike();
+                e.preventDefault(), updateState();
               }}
             >
-              <BsHeartFill className="h-5 w-5 text-slate-500 hover:text-white" />
+              {likedList.includes(post._id) ? (
+                <AiFillHeart className="h-5 w-5  text-[#5dec9e]" />
+              ) : (
+                <AiOutlineHeart
+                  className={"h-5 w-5 text-slate-500 hover:text-white"}
+                />
+              )}
             </div>
           </div>
         </div>
