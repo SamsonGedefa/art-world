@@ -91,7 +91,7 @@ export default function PostForm() {
             value={content}
             name="content"
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Share your work..."
+            placeholder="Give it a title!"
             rows="2"
             className="bg-transparent outline-none text-[#d9d9d9] text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px] resize-none"
           />

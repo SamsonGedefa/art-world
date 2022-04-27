@@ -11,13 +11,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { toast } from "react-toastify";
-import axios from "axios";
 
 function Post({ post }) {
   const globalService = useContext(GlobalStateContext);
   const [state, send] = useActor(globalService.likeService);
-  const [loading, setLoading] = useState(false);
 
   const [liked, setLiked] = useState(false);
   const [likedList, setLikedList] = useState([]);
@@ -25,13 +22,16 @@ function Post({ post }) {
   const payload = { postId: post._id };
 
   const updateState = () => {
-    console.log("LIKE", likedList);
     setLiked(!liked);
-    globalService.likeService.send("LIKED", payload);
-    console.log("LIKE", likedList);
-
-    // setLiked(() => state.context.likedPosts.includes(post._id));
   };
+
+  useEffect(() => {
+    globalService.likeService.send("LIKED", payload);
+  }, [liked]);
+
+  useEffect(() => {
+    likedList.includes(post._id) && setLiked(true);
+  }, [likedList]);
 
   useEffect(() => {
     setLikedList(state.context.likedPosts);
@@ -70,7 +70,7 @@ function Post({ post }) {
                 e.preventDefault(), updateState();
               }}
             >
-              {likedList.includes(post._id) ? (
+              {liked ? (
                 <AiFillHeart className="h-5 w-5  text-[#5dec9e]" />
               ) : (
                 <AiOutlineHeart

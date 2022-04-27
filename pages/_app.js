@@ -8,33 +8,25 @@ import { GlobalStateContext, GlobalStateProvider } from "machines/contexts";
 import { likeMachine } from "machines/likeState";
 import { useInterpret, useMachine } from "@xstate/react";
 
-const STORAGE_KEY = "myPersistedState";
+const STORAGE_KEY = "likedPersistedState";
 
-let serializedState;
+let previousState;
 if (typeof window !== "undefined") {
-  serializedState =
+  previousState =
     JSON.parse(localStorage.getItem(STORAGE_KEY)) || likeMachine.initialState;
 }
-
-// let previousState;
-
-// if (serializedState) {
-//   previousState = JSON.parse(serializedState);
-//   console.error("previousState", previousState);
-// }
 
 export default function MyApp({ Component, pageProps, user }) {
   const getLayout = Component.getLayout || ((page) => page);
 
+  // Restores persisted like state on page load
   const likeService = useInterpret(likeMachine)
     .onTransition((state) => {
-      console.log("--Init-----", state);
       if (state.changed) {
-        console.log("--Set-----", state.value);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       }
     })
-    .start(serializedState);
+    .start(previousState);
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -47,13 +39,3 @@ export default function MyApp({ Component, pageProps, user }) {
     </SessionProvider>
   );
 }
-
-// return (
-//   <SessionProvider session={pageProps.session}>
-//     <RecoilRoot>
-//       {getLayout(<Component {...pageProps} />)}
-//       <ToastContainer />
-//     </RecoilRoot>
-//   </SessionProvider>
-// );
-// }
