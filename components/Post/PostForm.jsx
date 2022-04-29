@@ -8,10 +8,14 @@ import { modalState } from "../../atoms/modalAtom";
 import { updatePostState } from "../../atoms/postAtom";
 import axios from "axios";
 import { usePostPages } from "@/lib/post";
-
+import { FiX } from "react-icons/fi";
 export default function PostForm() {
-  const [files, setFiles] = useState([]);
-  const [images, setImages] = useState([]);
+  const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageSize, setImageSize] = useState({
+    height: null,
+    width: null,
+  });
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
@@ -22,15 +26,17 @@ export default function PostForm() {
     async (e) => {
       e.preventDefault();
 
-      if (!files) {
-        toast("No file selected");
+      if (!file) {
+        toast("Image is required");
+        return;
+      }
+      if (!content) {
+        toast("Title is required");
         return;
       }
       const formData = new FormData();
 
-      files.forEach((file, i) => {
-        formData.append(i, file);
-      });
+      formData.append("image", file);
 
       formData.append("content", content);
 
@@ -38,7 +44,7 @@ export default function PostForm() {
         await axios.post("/api/post", formData, {
           headers: { "content-type": "multipart/form-data" },
         });
-        mutate(); // refreshs post as it's bounded to the SWR key
+        mutate(); // refresh feed
       } catch (err) {
         toast.error(err);
       } finally {
@@ -47,30 +53,27 @@ export default function PostForm() {
         setHandlePost(true);
       }
     },
-    [files, images, mutate]
+    [file, image, mutate]
   );
 
   useEffect(() => {
-    let objectURL = "";
-    files.forEach((file) => {
-      objectURL = URL.createObjectURL(file);
-      setImages((images) => [...images, objectURL]);
-    });
+    if (file) {
+      console.log(file);
+      let objectURL = URL.createObjectURL(file);
+      setImage(objectURL);
+    }
 
     return () => URL.revokeObjectURL(objectURL);
-  }, [files]);
+  }, [file]);
 
   function selectedFile(e) {
-    if (e.target.files.length > 4) {
-      toast("Please only select upto 4 files");
-      return;
-    }
-    const fileArr = Array.from(e.target.files);
-    setFiles(fileArr);
+    e.preventDefault();
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
   }
 
-  const removeImage = (id) => {
-    setImages((images) => images.filter((img, i) => i !== id));
+  const removeImage = () => {
+    setImage(null);
   };
 
   return (
@@ -85,8 +88,11 @@ export default function PostForm() {
         className="h-11 w-11 rounded-full cursor-pointer"
       />
 
-      <form onSubmit={uploadFile} className="divide-y divide-gray-700 w-full">
-        <div className={`${images && "pb-7"} ${content && "space-y-2.5"}`}>
+      <form
+        onSubmit={uploadFile}
+        className="divide-y divide-gray-700 w-full max-h-90 "
+      >
+        <div className={`${image && "pb-7"} ${content && "space-y-2.5"} `}>
           <textarea
             value={content}
             name="content"
@@ -96,14 +102,9 @@ export default function PostForm() {
             className="bg-transparent outline-none text-[#d9d9d9] text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px] resize-none"
           />
 
-          {images.length > 0 && (
-            // grid grid-cols-2 gap-2 grid-rows-2 w-3/4 h-80
-            <div
-              className={`space-y-2 ${
-                images.length == 1 ? "columns-1xl" : "columns-2"
-              } `}
-            >
-              <ImageList images={images} removeImage={removeImage} />
+          {image && (
+            <div className={``}>
+              <ImageList image={image} removeImage={removeImage} />
             </div>
           )}
         </div>
@@ -112,28 +113,20 @@ export default function PostForm() {
             <div className="flex items-center">
               <div className="icon">
                 <label htmlFor="fileInput">
-                  <AiTwotoneCamera size={25} className="text-[#e65a5a] " />
+                  <AiTwotoneCamera size={25} className="text-[#5dec9e]" />
                 </label>
                 <input
                   id="fileInput"
                   type="file"
-                  multiple
                   accept="image/*"
                   style={{ display: "none" }}
                   onChange={(e) => selectedFile(e)}
                 />
               </div>
-
-              <div
-                className="icon"
-                // onClick={() => setShowEmojis(!showEmojis)
-              >
-                <BiShocked size={25} className="text-[#e65a5a]" />
-              </div>
             </div>
             <button
-              className="bg-[#e65a5a] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
-              disabled={!content && !files}
+              className="bg-[#5dec9e] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#93e4b7] disabled:hover:bg-[#97bda8] disabled:opacity-50 disabled:cursor-default"
+              disabled={!content && !file}
               onClick={() => {
                 uploadFile;
               }}

@@ -41,7 +41,7 @@ export default function Sidebar() {
       <Tab href="/" text="Home" Icon={HiHome} isSelected={isTabOneSelected} />
       <Tab
         href="/messages"
-        text="Massages"
+        text="Messages"
         Icon={FaCommentDots}
         isSelected={isTabTwoSelected}
       />
