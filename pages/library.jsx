@@ -21,7 +21,7 @@ export default function UserLikedPostPage({ user }) {
     : [];
 
   return (
-    <div className="flex-grow h-full px-10 ">
+    <div className="flex-grow  px-10 ">
       <div className="my-10 text-white  space-y-4">
         <h1 className="font-2xl">
           Hi, <span className="font-bold text-[#5dec9e]">{user.username}</span>

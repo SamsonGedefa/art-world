@@ -3,6 +3,7 @@ import { IncomingForm } from "formidable";
 import { insertPost, getPostBy } from "@/lib/db/post";
 import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -38,9 +39,7 @@ export default async (req, res) => {
 
   if (req.method === "POST") {
     const data = await new Promise((resolve, reject) => {
-      const form = new IncomingForm({
-        multiples: true,
-      });
+      const form = new IncomingForm();
 
       form.parse(req, (err, fields, files) => {
         if (err) return reject(err);
@@ -50,24 +49,15 @@ export default async (req, res) => {
 
     // for single data.files.image.filepath
     // for multiple data.files.images.img.filepath
-    const values = Object.values(data.files);
+    const filePath = data?.files?.image.filepath;
 
-    const upload = values.map(async (img) => {
-      return await cloudinary.v2.uploader.upload(img.filepath);
-    });
-
-    Promise.all(upload)
+    await cloudinary.v2.uploader
+      .upload(filePath)
       .then(async (result) => {
-        const imgArray = [];
-
-        result.forEach((img) => {
-          imgArray.push(img.secure_url);
-        });
-
         const post = await insertPost({
           userId: new ObjectId(session.user._id),
           content: data.fields.content,
-          images: imgArray,
+          images: result.secure_url,
         });
 
         if (!post) throw error;

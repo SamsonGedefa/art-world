@@ -13,7 +13,7 @@ export default function UserPost({ post }) {
     <div className="flex flex-col items-center">
       <SinglePost key={post._id} post={post} />
       <SinglePostInfo post={post} />
-      <PostFigures />
+      <PostFigures post={post} />
       <CommenterForm post={post} />
       <CommentList post={post} />
     </div>
