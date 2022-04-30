@@ -1,7 +1,7 @@
 import Image from "next/image";
 export default function Hero({ user }) {
   return (
-    <div className="relative w-screen h-80 text-white">
+    <div className="relative w-full h-80 text-white">
       {/* <div className="w-screen h-80 fixed overflow-hidden"> */}
       <Image
         src={"/user_user.jpg"}
