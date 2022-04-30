@@ -26,7 +26,7 @@ export default function Nav() {
       <div className="relative flex items-center justify-center w-[140px] h-[140px] cursor-pointer">
         <Link href={"/"}>
           <a>
-            <Image src="/logo.png" layout="fill" objectFit="cover" />
+            <Image src="/logo.png" alt="logo" layout="fill" objectFit="cover" />
           </a>
         </Link>
       </div>

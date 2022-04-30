@@ -15,8 +15,7 @@ export const config = {
     bodyParser: false,
   },
 };
-
-export default async (req, res) => {
+const handler = async (req, res) => {
   // Get the user from session
   const session = await getSession({ req });
 
@@ -67,3 +66,5 @@ export default async (req, res) => {
     return res.json(data);
   }
 };
+
+export default handler;

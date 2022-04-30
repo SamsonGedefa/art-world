@@ -6,7 +6,7 @@ export default function SinglePostInfo({ post }) {
     <div className="my-10 flex w-2/3 max-h-40 justify-between text-white">
       <div className="flex space-x-3">
         <div className="">
-          <Avatar size={70} username="user" url="/user_user.jpg" />
+          <Avatar size={70} username="user" url="/default_user.jpg" />
         </div>
         <div className="space-y-2">
           <h1 className="text-2xl font-bold">{post.content}</h1>

@@ -2,7 +2,7 @@ import { findComments, insertComment } from "@/lib/db/comment";
 import { findPostById } from "@/lib/db/post";
 import { ObjectId } from "mongodb";
 import { getSession } from "next-auth/react";
-export default async (req, res) => {
+const handler = async (req, res) => {
   if (req.method === "GET") {
     try {
       const comments = await findComments(
@@ -35,3 +35,5 @@ export default async (req, res) => {
     return res.json({ comment });
   }
 };
+
+export default handler;

@@ -14,7 +14,7 @@ export default function Hero({ user }) {
 
       <div className="absolute bottom-0 left-0 flex px-4">
         <div className="flex items-center justify-center w-28 h-28 hoverAnimation border">
-          <Image src="/user_user.jpg" width={70} height={70} />
+          <Image src="/default_user.jpg" width={70} height={70} />
         </div>
 
         <div className="font-semibold text-xl px-3">{user.username}</div>

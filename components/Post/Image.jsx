@@ -9,7 +9,11 @@ const ImageList = (props) => (
     >
       <FiX className="text-white h-5" />
     </div>
-    <img src={props.image} className="rounded-2xl max-h-80 object-contain" />
+    <img
+      src={props.image}
+      alt={props.image.content}
+      className="rounded-2xl max-h-80 object-contain"
+    />
   </div>
 );
 

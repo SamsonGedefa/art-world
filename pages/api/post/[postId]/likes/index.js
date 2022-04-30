@@ -4,7 +4,7 @@ import { updatePostUnlike } from "@/lib/db/post";
 import { getSession } from "next-auth/react";
 import { useLocalStorage } from "@/lib/useLike";
 
-export default async function (req, res) {
+const handler = async (req, res) => {
   const session = await getSession({ req });
 
   const { postId } = req.query;
@@ -30,4 +30,5 @@ export default async function (req, res) {
     const data = await getPostsLikedBy(userId);
     return res.json({ data });
   }
-}
+};
+export default handler;

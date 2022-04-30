@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
 import { getUserLikedPost } from "@/lib/db/post";
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   const session = await getSession({ req });
 
   if (req.method === "GET") {
@@ -18,3 +18,5 @@ export default async (req, res) => {
     }
   }
 };
+
+export default handler;
