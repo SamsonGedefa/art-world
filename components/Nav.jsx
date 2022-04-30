@@ -34,7 +34,7 @@ export default function Nav() {
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="flex justify-center mt-auto ml-auto mb-auto mr-5  items-center space-x-2 bg-[#11EE8F] text-white rounded-sm w-36 h-[36px] text-lg font-bold shadow-md hover:bg-[#a5ddc5]"
+        className="flex justify-center mt-auto ml-auto mb-auto mr-10  items-center space-x-2 bg-[#11EE8F] text-white rounded-sm w-36 h-[36px] text-lg font-bold shadow-md hover:bg-[#a5ddc5]"
         onClick={() => setModalOpen(true)}
       >
         <IoMdAdd size={20} className="" />

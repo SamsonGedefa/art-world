@@ -19,9 +19,6 @@ export const config = {
 export default async (req, res) => {
   // Get the user from session
   const session = await getSession({ req });
-  // if (!session) {
-  //   console.log("POST_API: ", session.user);
-  // }
 
   if (req.method === "GET") {
     try {
@@ -29,7 +26,7 @@ export default async (req, res) => {
         req.query.before ? new Date(req.query.before) : undefined,
         req.query.by,
         req.query.like,
-        req.query.limit ? parseInt(req.query.limit, 10) : undefined
+        req.query.limit ? parseInt(req.query.limit, 16) : undefined
       );
       res.json({ posts });
     } catch (error) {
@@ -39,13 +36,16 @@ export default async (req, res) => {
 
   if (req.method === "POST") {
     const data = await new Promise((resolve, reject) => {
-      const form = new IncomingForm();
+      const form = new IncomingForm({ multiples: true });
 
       form.parse(req, (err, fields, files) => {
         if (err) return reject(err);
         resolve({ fields, files });
       });
     });
+
+    // Tags
+    const values = Object.values(JSON.parse(data?.fields?.tags));
 
     // for single data.files.image.filepath
     // for multiple data.files.images.img.filepath
@@ -58,6 +58,7 @@ export default async (req, res) => {
           userId: new ObjectId(session.user._id),
           content: data.fields.content,
           images: result.secure_url,
+          tags: values,
         });
 
         if (!post) throw error;

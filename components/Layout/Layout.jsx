@@ -4,12 +4,6 @@ import Nav from "../Nav";
 import { Modal } from "@/components/Modal";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
-import axios from "axios";
-import useSWR from "swr";
-import { useLocalStorage } from "@/lib/useLike";
-import { useEffect } from "react";
-
-// const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 export default function Layout({ children }) {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
