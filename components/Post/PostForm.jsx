@@ -2,39 +2,55 @@ import React, { useRef, useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import ImageList from "./Image";
 import { AiTwotoneCamera } from "react-icons/ai";
-import { BiShocked } from "react-icons/bi";
+import { VscTag } from "react-icons/vsc";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 import { updatePostState } from "../../atoms/postAtom";
 import axios from "axios";
 import { usePostPages } from "@/lib/post";
 import { FiX } from "react-icons/fi";
+import Tag from "../Tag";
 export default function PostForm() {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
-  const [imageSize, setImageSize] = useState({
-    height: null,
-    width: null,
-  });
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [handlePost, setHandlePost] = useRecoilState(updatePostState);
   const { mutate } = usePostPages();
+  const [tags, setTags] = useState([]);
+  const [tagDisplay, setTagDisplay] = useState(false);
+
+  function handleKeyDown(e) {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    const value = e.target.value;
+    if (!value.trim()) return;
+
+    setTags([...tags, value]);
+    e.target.value = "";
+  }
+
+  function removeTag(index) {
+    setTags(tags.filter((el, i) => i !== index));
+  }
 
   const uploadFile = useCallback(
     async (e) => {
       e.preventDefault();
 
+      console.log("TAGs", tags);
       if (!file) {
         toast("Image is required");
         return;
       }
-      if (!content) {
-        toast("Title is required");
-        return;
-      }
+      // if (!content) {
+      //   toast("Title is required");
+      //   return;
+      // }
       const formData = new FormData();
+
+      formData.append("tags", JSON.stringify(tags));
 
       formData.append("image", file);
 
@@ -53,7 +69,7 @@ export default function PostForm() {
         setHandlePost(true);
       }
     },
-    [file, image, mutate]
+    [file, image, mutate, tags]
   );
 
   useEffect(() => {
@@ -62,25 +78,26 @@ export default function PostForm() {
       let objectURL = URL.createObjectURL(file);
       setImage(objectURL);
     }
+    setTags([]);
 
     return () => URL.revokeObjectURL(objectURL);
   }, [file]);
 
   function selectedFile(e) {
     e.preventDefault();
-    console.log(e.target.files[0]);
     setFile(e.target.files[0]);
   }
 
   const removeImage = () => {
     setImage(null);
+    setTagDisplay(!tagDisplay);
   };
 
   return (
     <div
       className={` max-w-2xl  p-3 flex space-x-3  scrollbar-hide ${
         loading && "opacity-60"
-      }`}
+      } ${image && ""} `}
     >
       <img
         src="default_user.jpg"
@@ -90,9 +107,9 @@ export default function PostForm() {
 
       <form
         onSubmit={uploadFile}
-        className="divide-y divide-gray-700 w-full max-h-90 "
+        className=" divide-y divide-gray-700 w-full max-h-90 "
       >
-        <div className={`${image && "pb-7"} ${content && "space-y-2.5"} `}>
+        <div className={` ${image && "pb-7"} ${content && "space-y-2.5"} `}>
           <textarea
             value={content}
             name="content"
@@ -103,14 +120,24 @@ export default function PostForm() {
           />
 
           {image && (
-            <div className={``}>
+            <div className=" ">
               <ImageList image={image} removeImage={removeImage} />
+            </div>
+          )}
+
+          {tagDisplay && (
+            <div className="overflow-auto">
+              <Tag
+                tags={tags}
+                removeTag={removeTag}
+                handleKeyDown={handleKeyDown}
+              />
             </div>
           )}
         </div>
         {!loading && (
-          <div className="flex items-center justify-between pt-2.5">
-            <div className="flex items-center">
+          <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center space-x-2">
               <div className="icon">
                 <label htmlFor="fileInput">
                   <AiTwotoneCamera size={25} className="text-[#5dec9e]" />
@@ -123,7 +150,13 @@ export default function PostForm() {
                   onChange={(e) => selectedFile(e)}
                 />
               </div>
+              {image && (
+                <div onClick={() => setTagDisplay(!tagDisplay)}>
+                  <VscTag size={22} className="text-[#5dec9e]" />
+                </div>
+              )}
             </div>
+
             <button
               className="bg-[#5dec9e] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#93e4b7] disabled:hover:bg-[#97bda8] disabled:opacity-50 disabled:cursor-default"
               disabled={!content && !file}

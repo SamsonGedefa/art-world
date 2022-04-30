@@ -23,7 +23,7 @@ export default function PostFigures({ post }) {
   }, [data]);
 
   return (
-    <div className="flex align-end align-center w-2/3 h-20">
+    <div className="flex align-end my-2 w-2/3 max-h-20">
       <div className="flex gap-5 text-gray-400">
         <div className="flex space-x-3">
           <AiFillStar size={20} />

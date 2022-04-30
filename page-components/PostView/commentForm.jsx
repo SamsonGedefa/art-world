@@ -38,7 +38,7 @@ const CommenterInner = ({ post }) => {
   );
 
   return (
-    <div className="flex w-2/3 h-20 text-white space-4 my-10">
+    <div className=" flex w-2/3 h-20 text-white space-4 my-10">
       <form onSubmit={onSubmit} className="w-full ">
         <div className="">
           <h1 className="text-xl font-black ">Comments</h1>
@@ -57,7 +57,7 @@ const CommenterInner = ({ post }) => {
 
           <button
             onClick={() => onSubmit}
-            className="bg-[#e65a5a] text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#ce3131] disabled:hover:bg-[#ce3131] disabled:opacity-50 disabled:cursor-default"
+            className="border-gray-300 text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#5dec9e] disabled:hover:bg-[#5dec9e] disabled:opacity-50 disabled:cursor-default"
           >
             Comment
           </button>

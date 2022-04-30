@@ -5,7 +5,8 @@ import { getSession } from "next-auth/react";
 import { findUserByUsername } from "@/lib/db/user";
 import { Layout } from "@/components/Layout";
 import { usePostPages } from "@/lib/post";
-import { useLocalStorage, getAllPostLikedByUser } from "@/lib/useLike";
+import { motion } from "framer-motion";
+import { AiOutlineReload } from "react-icons/ai";
 
 export default function UserLikedPostPage({ user }) {
   const { data, error, size, setSize, isLoadingMore, isReachingEnd } =
@@ -41,17 +42,29 @@ export default function UserLikedPostPage({ user }) {
         ))}
       </ul>
 
-      <button
-        disabled={isLoadingMore || isReachingEnd}
-        onClick={() => setSize(size + 1)}
-        className="bg-[#e65a5a] rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left w-44 h-14 text-center"
-      >
-        {isLoadingMore
-          ? "Loading..."
-          : isReachingEnd
-          ? "No more posts"
-          : "Load more"}
-      </button>
+      {isReachingEnd ? (
+        <div className="flex w-full justify-center my-10 text-gray-400 font-bold">
+          No more post are found
+        </div>
+      ) : (
+        <div className="flex w-full justify-center my-10">
+          <motion.button
+            disabled={isLoadingMore || isReachingEnd}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="flex justify-center items-center space-x-2 text-white rounded-sm w-56 h-[36px] text-lg font-bold shadow-md border"
+            onClick={() => setSize(size + 1)}
+          >
+            <span className="inline">
+              {isLoadingMore ? (
+                <AiOutlineReload size={20} className="animate-spin" />
+              ) : (
+                "Load more"
+              )}
+            </span>
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 }
