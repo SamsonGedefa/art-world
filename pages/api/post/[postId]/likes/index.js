@@ -2,7 +2,6 @@ import { findPostById } from "@/lib/db/post";
 import { updatePostLike, getPostsLikedBy } from "@/lib/db/post";
 import { updatePostUnlike } from "@/lib/db/post";
 import { getSession } from "next-auth/react";
-import { useLocalStorage } from "@/lib/useLike";
 
 const handler = async (req, res) => {
   const session = await getSession({ req });
@@ -18,7 +17,6 @@ const handler = async (req, res) => {
   if (req.method === "PUT") {
     if (likeIds.includes(userId)) {
       const response = await updatePostUnlike(postId, userId);
-      console.log("RES:DATA", response);
       return res.json({ response });
     } else {
       const response = await updatePostLike(postId, userId);
