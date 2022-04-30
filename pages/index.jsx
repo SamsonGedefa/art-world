@@ -5,7 +5,7 @@ import Feed from "@/components/Feed";
 import { getSession } from "next-auth/react";
 import { findUserByUsername } from "@/lib/db/user";
 
-export default function Home({ user }) {
+export default function Home() {
   return (
     <div className="h-full">
       <Head>
@@ -16,21 +16,21 @@ export default function Home({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
+// export async function getServerSideProps(context) {
+//   const session = await getSession(context);
 
-  const user = await findUserByUsername(session.user.username);
+//   const user = await findUserByUsername(session.user.username);
 
-  // const user = session.user;
+//   // const user = session.user;
 
-  if (!user) {
-    return {
-      notFound: true,
-    };
-  }
-  user._id = String(user._id);
-  return { props: { user } };
-}
+//   if (!user) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+//   user._id = String(user._id);
+//   return { props: { user } };
+// }
 
 Home.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
