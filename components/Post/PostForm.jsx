@@ -8,8 +8,8 @@ import { modalState } from "../../atoms/modalAtom";
 import { updatePostState } from "../../atoms/postAtom";
 import axios from "axios";
 import { usePostPages } from "@/lib/post";
-import { FiX } from "react-icons/fi";
 import Tag from "../Tag";
+import Avatar from "../Avatar";
 export default function PostForm() {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
@@ -44,10 +44,7 @@ export default function PostForm() {
         toast("Image is required");
         return;
       }
-      // if (!content) {
-      //   toast("Title is required");
-      //   return;
-      // }
+
       const formData = new FormData();
 
       formData.append("tags", JSON.stringify(tags));
@@ -99,11 +96,11 @@ export default function PostForm() {
         loading && "opacity-60"
       } ${image && ""} `}
     >
-      <img
-        src="default_user.jpg"
-        alt=""
-        className="h-11 w-11 rounded-full cursor-pointer"
-      />
+      <div className="flex text-white space-x-2  items-start">
+        <div className="">
+          <Avatar size={40} />
+        </div>
+      </div>
 
       <form
         onSubmit={uploadFile}

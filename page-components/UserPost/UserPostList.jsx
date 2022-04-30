@@ -3,20 +3,24 @@ import Link from "next/link";
 import { Post } from "@/components/Post";
 import { AiOutlineReload } from "react-icons/ai";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Avatar from "@/components/Avatar";
 export default function UserPostList({ user }) {
   const { data, size, setSize, isLoadingMore, isReachingEnd } = usePostPages({
     creatorId: user._id,
   });
-  console.log("UserPosts", data);
 
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : [];
 
   return (
-    <div className="flex-grow h-full px-10 ">
-      <div className="my-10 text-white  space-y-4">
-        <h2 className="text-5xl">Posts you made</h2>
+    <div className="px-10">
+      <div className="flex my-10 text-white space-x-4 border-b py-4">
+        <div className="">
+          <Avatar size={70} username="user" url={user.profilePicture} />
+        </div>
+        <h2 className="text-2xl">@{user.username}</h2>
       </div>
       <ul className="flex flex-wrap space-x-2 space-y-2">
         {posts.map((post) => (

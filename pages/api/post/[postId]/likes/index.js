@@ -12,7 +12,7 @@ const handler = async (req, res) => {
 
   const likeIds = post.likes.map((id) => id.toString());
 
-  const userId = session.user._id.toString();
+  const userId = session.user._id;
 
   if (req.method === "PUT") {
     if (likeIds.includes(userId)) {

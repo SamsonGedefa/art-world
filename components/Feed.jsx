@@ -3,7 +3,7 @@ import { Post } from "@/components/Post";
 import { usePostPages } from "../lib/post";
 import Link from "next/link";
 import { AiOutlineReload } from "react-icons/ai";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function Feed() {
   const [deferPageLoadSSR, setDeferPageLoadSSR] = useState(false);
