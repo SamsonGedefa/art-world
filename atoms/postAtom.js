@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 export const updatePostState = atom({
-  key: "updatePostState",
+  key: "updatePostKey",
   default: false,
 });
 

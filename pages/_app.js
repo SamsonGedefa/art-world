@@ -1,12 +1,11 @@
 import "../styles/globals.css";
-import React, { useContext } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot } from "recoil";
-import { GlobalStateContext, GlobalStateProvider } from "machines/contexts";
+import { GlobalStateContext } from "machines/contexts";
 import { likeMachine } from "machines/likeState";
-import { useInterpret, useMachine } from "@xstate/react";
+import { useInterpret } from "@xstate/react";
 
 const STORAGE_KEY = "likedPersistedState";
 
@@ -23,7 +22,9 @@ export default function MyApp({ Component, pageProps, user }) {
   const likeService = useInterpret(likeMachine)
     .onTransition((state) => {
       if (state.changed) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (typeof window !== "undefined") {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
       }
     })
     .start(previousState);

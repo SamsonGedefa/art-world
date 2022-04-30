@@ -1,12 +1,6 @@
-import React, {
-  useCallback,
-  useState,
-  useEffect,
-  useContext,
-  useLayoutEffect,
-} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { GlobalStateContext } from "machines/contexts";
-import { useActor, useMachine } from "@xstate/react";
+import { useActor } from "@xstate/react";
 import Link from "next/link";
 import Image from "next/image";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
