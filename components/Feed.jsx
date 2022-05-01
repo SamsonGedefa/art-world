@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { Post } from "@/components/Post";
 import { usePostPages } from "../lib/post";
 import Link from "next/link";
+import { AiOutlineReload } from "react-icons/ai";
+import { motion } from "framer-motion";
 
 export default function Feed() {
   const [deferPageLoadSSR, setDeferPageLoadSSR] = useState(false);
@@ -35,17 +37,29 @@ export default function Feed() {
           ))}
       </ul>
 
-      <button
-        disabled={isLoadingMore || isReachingEnd}
-        onClick={() => setSize(size + 1)}
-        className="bg-[#e65a5a] rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left w-44 h-14 text-center"
-      >
-        {isLoadingMore
-          ? "Loading..."
-          : isReachingEnd
-          ? "No more posts"
-          : "Load more"}
-      </button>
+      {isReachingEnd ? (
+        <div className="flex w-full justify-center my-10 text-gray-400 font-bold">
+          No more post are found
+        </div>
+      ) : (
+        <div className="flex w-full justify-center my-10">
+          <motion.button
+            disabled={isLoadingMore || isReachingEnd}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="flex justify-center items-center space-x-2 text-white rounded-sm w-56 h-[36px] text-lg font-bold shadow-md border"
+            onClick={() => setSize(size + 1)}
+          >
+            <span className="inline">
+              {isLoadingMore ? (
+                <AiOutlineReload size={20} className="animate-spin" />
+              ) : (
+                "Load more"
+              )}
+            </span>
+          </motion.button>
+        </div>
+      )}
     </div>
   );
 }

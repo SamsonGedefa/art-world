@@ -3,6 +3,7 @@ import { IncomingForm } from "formidable";
 import { insertPost, getPostBy } from "@/lib/db/post";
 import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -14,13 +15,9 @@ export const config = {
     bodyParser: false,
   },
 };
-
-export default async (req, res) => {
+const handler = async (req, res) => {
   // Get the user from session
   const session = await getSession({ req });
-  // if (!session) {
-  //   console.log("POST_API: ", session.user);
-  // }
 
   if (req.method === "GET") {
     try {
@@ -28,7 +25,7 @@ export default async (req, res) => {
         req.query.before ? new Date(req.query.before) : undefined,
         req.query.by,
         req.query.like,
-        req.query.limit ? parseInt(req.query.limit, 10) : undefined
+        req.query.limit ? parseInt(req.query.limit, 16) : undefined
       );
       res.json({ posts });
     } catch (error) {
@@ -38,9 +35,7 @@ export default async (req, res) => {
 
   if (req.method === "POST") {
     const data = await new Promise((resolve, reject) => {
-      const form = new IncomingForm({
-        multiples: true,
-      });
+      const form = new IncomingForm({ multiples: true });
 
       form.parse(req, (err, fields, files) => {
         if (err) return reject(err);
@@ -48,26 +43,21 @@ export default async (req, res) => {
       });
     });
 
+    // Tags
+    const values = Object.values(JSON.parse(data?.fields?.tags));
+
     // for single data.files.image.filepath
     // for multiple data.files.images.img.filepath
-    const values = Object.values(data.files);
+    const filePath = data?.files?.image.filepath;
 
-    const upload = values.map(async (img) => {
-      return await cloudinary.v2.uploader.upload(img.filepath);
-    });
-
-    Promise.all(upload)
+    await cloudinary.v2.uploader
+      .upload(filePath)
       .then(async (result) => {
-        const imgArray = [];
-
-        result.forEach((img) => {
-          imgArray.push(img.secure_url);
-        });
-
         const post = await insertPost({
           userId: new ObjectId(session.user._id),
           content: data.fields.content,
-          images: imgArray,
+          images: result.secure_url,
+          tags: values,
         });
 
         if (!post) throw error;
@@ -76,3 +66,5 @@ export default async (req, res) => {
     return res.json(data);
   }
 };
+
+export default handler;

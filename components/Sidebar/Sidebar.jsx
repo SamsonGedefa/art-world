@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { MdCollections } from "react-icons/md";
 
 export default function Sidebar() {
-  const { session } = useSession();
+  const { data: session } = useSession();
 
   const { query } = useRouter();
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function Sidebar() {
       <Tab href="/" text="Home" Icon={HiHome} isSelected={isTabOneSelected} />
       <Tab
         href="/messages"
-        text="Massages"
+        text="Messages"
         Icon={FaCommentDots}
         isSelected={isTabTwoSelected}
       />
@@ -59,14 +59,36 @@ export default function Sidebar() {
       />
       <div className="w-full border-b border-gray-700"></div>
 
-      <div className={` ${!menuOpen && "hidden"} ml-7 self-start mt-4`}>
-        <button
-          onClick={() => router.push("/signup")}
-          className="bg-[#5dec9e]  text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+      {session && (
+        <div className={` ${!menuOpen && "hidden"} ml-7 self-start mt-4`}>
+          <button
+            onClick={() => signOut()}
+            className="bg-[#95bca7]  text-white rounded-sm px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+          >
+            Sign Out
+          </button>
+        </div>
+      )}
+
+      {!session && (
+        <div
+          className={` ${!menuOpen && "hidden"} ml-7 self-start mt-4 space-x-2`}
         >
-          Join
-        </button>
-      </div>
+          <button
+            onClick={() => router.push("/signup")}
+            className="bg-[#95bca7]   text-white rounded-sm px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+          >
+            Join
+          </button>
+          <span>Or</span>
+          <button
+            onClick={() => router.push("/login")}
+            className="border text-white rounded-sm px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+          >
+            Sign In
+          </button>
+        </div>
+      )}
     </aside>
   );
 }

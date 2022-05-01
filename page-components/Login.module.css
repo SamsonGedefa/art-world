@@ -14,14 +14,18 @@
     border-radius: 6px;
     background-color: #201d1d;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
-    text-align: center;
+    padding: 2rem;
+  
+    text-align: start;
+   
     max-height: 450px;
   }
   
   .main h1 {
     text-align: center;
+    font-size: large;
     color: white;
+    margin-bottom: 0.5rem;
   }
   
   .control {
@@ -53,6 +57,7 @@
     background-color: #e65a5a;
     border: 1px solid #e65a5a;
     border-radius: 4px;
+    margin-top: 0.5rem;
     padding: 0.5rem 2.5rem;
   }
 

@@ -10,7 +10,7 @@ export default function CommentList({ post }) {
     : [];
 
   return (
-    <div className="flex flex-col w-2/3 text-white ">
+    <div className="flex flex-col flex-shrink-0 w-2/3  text-white ">
       {comments.map((comment) => (
         <div key={comment._id}>
           <Comment comment={comment} />

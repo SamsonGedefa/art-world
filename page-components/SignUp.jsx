@@ -61,17 +61,11 @@ export default function SignUp() {
           </div>
           <div className={styles.control}>
             <label htmlFor="username">Pick your Username</label>
-            <input
-              type="text"
-              id="username"
-              required
-              ref={usernameRef}
-              required
-            />
+            <input type="text" id="username" required ref={usernameRef} />
           </div>
           <div className={styles.control}>
             <label htmlFor="name">Full Name</label>
-            <input type="text" id="name" required ref={nameRef} required />
+            <input type="text" id="name" required ref={nameRef} />
           </div>
           <div className={styles.actions}>
             <button>Create Account</button>

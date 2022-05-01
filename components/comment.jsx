@@ -1,11 +1,13 @@
 import Avatar from "./Avatar";
 import { useMemo } from "react";
+import { format } from "@lukeed/ms";
+
 export default function Comment({ comment }) {
-  //   const timestampTxt = useMemo(() => {
-  //     const diff = Date.now() - new Date(comment.createdAt).getTime();
-  //     if (diff < 1 * 60 * 1000) return "Just now";
-  //     return `${format(diff, true)} ago`;
-  //   }, [comment.createdAt]);
+  const timestampTxt = useMemo(() => {
+    const diff = Date.now() - new Date(comment.createdAt).getTime();
+    if (diff < 1 * 60 * 1000) return "Just now";
+    return `${format(diff, true)} ago`;
+  }, [comment.createdAt]);
 
   return (
     <div className="flex  w-full my-5 h-20">
@@ -16,7 +18,7 @@ export default function Comment({ comment }) {
         <div className="w-full h-full flex flex-col  bg-gray-700 px-2">
           <div className="flex space-x-4">
             <div className="font-bold">{comment.creator.username}</div>
-            <div>{comment.createdAt}</div>
+            <time dateTime={String(comment.createdAt)}>{timestampTxt}</time>
           </div>
 
           <div>{comment.content}</div>

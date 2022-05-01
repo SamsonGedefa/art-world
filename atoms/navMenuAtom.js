@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
 export const navMenuState = atom({
-  key: "navMenuState",
+  key: "navMenuKey",
   default: false,
 });

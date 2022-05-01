@@ -1,13 +1,13 @@
 import { getSession } from "next-auth/react";
 import { ObjectId } from "mongodb";
-import { getUserLikedPost } from "@/lib/db/post";
+import { getPostsLikedBy } from "@/lib/db/post";
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   const session = await getSession({ req });
 
   if (req.method === "GET") {
     try {
-      const posts = await getUserLikedPost(
+      const posts = await getPostsLikedBy(
         req.query.before ? new Date(req.query.before) : undefined,
         req.query.by,
         req.query.limit ? parseInt(req.query.limit, 10) : undefined
@@ -18,3 +18,5 @@ export default async (req, res) => {
     }
   }
 };
+
+export default handler;
