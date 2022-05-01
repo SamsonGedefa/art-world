@@ -24,15 +24,6 @@ export default function Profile ({user}) {
       }
     }
 
-    const handleClick = (e) => {
-      const value = e.target.value;
-      if (value !== "") {
-        console.log("not")
-      } else {
-        console.log("is empty")
-      }
-    }
-
     const handleChange = (e) => {
       const value = e.target.value;
       if (value !== "") {
@@ -91,23 +82,22 @@ export default function Profile ({user}) {
                 className="m-2 rounded-lg"
                 type="username"
                 name="username"
-                placeholder="asshole"
-                value={data.username}
+
+
                 onChange={handleChange}
               />
               <input 
                 className="m-2 rounded-lg"
                 type="password"
                 name="password"
-                value={data.password}
+
                 onChange={handleChange}
               />
               <input
                 className="m-2 rounded-lg"
                 type="email"
                 name="email"
-                placeholder={user.email}
-                value={data.email}
+
                 onChange={handleChange}
               />
               <textarea
@@ -115,9 +105,8 @@ export default function Profile ({user}) {
                 type="bio"
                 name="bio"
                 placeholder="Tell me about yourself"
-                value={data.bio}
+
                 onChange={handleChange}
-                onClick={handleClick}
               />
 
             </div>
@@ -160,100 +149,3 @@ export default function Profile ({user}) {
       </div>
     );
 }
-//   };
-//     /// delete ALL anbove thiss
-//     const router = useRouter();
-//     const [editProfile, setEditProfile] = useState("False");
-//     const [isLoading, setIsLoading] = useState(false);
-//     const nameRef = useRef();
-
-//     function onClick(event) {
-//         event.preventDefault()
-//         setEditProfile("True");
-//     }
-
-//     function cancel() {
-//         setEditProfile("False");
-//     }
-
-//     async function makeGetRequest(e) {
-//         e.preventDefault();
-//         let payload = { name: nameRef.current.value, occupation: 'gardener' };
-//         const axiosConfig = {
-//             headers: {
-//               "Content-Type": "application/json",
-//             },
-//           };
-    
-//         const response = await axios.post("/api/auth/signup", payload, axiosConfig);
-//         const user = await findUserByUsernameAndUpdate(session.user.username);
-//       }
-      
-
-//     const onSubmit = useCallback(async (e) => {
-//         e.preventDefault();
-//         alert(nameRef.current.value)
-//         const data = JSON.stringify({
-//           name: nameRef.current.value,
-//           email: user.email
-//         });
-        
-
-//         const axiosConfig = {
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//         };
-    
-//         try {
-//           setIsLoading(true);
-//           let res = await axios.post('api/auth/update',data , axiosConfig);
-//           console.log(res)
-//         } catch (e) {
-//           toast.error(e.message, { autoClose: 1000 });
-//         } finally {
-//           setIsLoading(false);
-//           router.push("/profile");
-//           setEditProfile("False");
-//         }
-//       }, []);
-
-//     if (editProfile === "True") {
-//         return (
-//             <div className="flex h-full">
-//             <form className="flex flex-col p-2 m-2 text-white" onSubmit={onSubmit}>
-
-//             <label htmlFor="username">Pick your Username</label>
-//             <input
-//               type="text"
-//               id="username"
-//               ref={nameRef}
-//             />
-
-//                 <label>Avatar Selection:</label> 
-                
-//                 {/* <div className="flex flex-wrap p-2">
-//                     <img className="flex p-2" src="https://picsum.photos/75/75" alt={ user.username + " avatar"} height={50} width={50}/> 
-//                     <img className="flex p-2" src="https://picsum.photos/75/75" alt={ user.username + " avatar"} height={50} width={50}/> 
-//                     <img className="flex p-2" src="https://picsum.photos/75/75" alt={ user.username + " avatar"} height={50} width={50}/> 
-//                     <img className="flex p-2" src="https://picsum.photos/75/75" alt={ user.username + " avatar"} height={50} width={50}/> 
-//                 </div> */}
-//                 <button className="" >Upload Avatar</button> 
-//                 <br/>
-//                 <label>Bio:</label>
-//                 <textarea placeholder="What about you?"></textarea>
-//                 <br/>
-//                 <label>Email: {user.email}</label>
-//                 <input htmlFor="email"></input>
-
-
-//             </form>
-//         </div>
-//         )
-
-//     } else {
-//         return (
-
-//         )
-//     }
-// }
