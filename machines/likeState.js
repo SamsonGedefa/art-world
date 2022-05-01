@@ -1,10 +1,10 @@
-import { assign, createMachine, InterpreterFrom } from "xstate";
+import { assign, createMachine } from "xstate";
 import axios from "axios";
 
 export const likeMachine = createMachine(
   {
     id: "likedPost",
-    initial: "toggleLikeUlike",
+    initial: "toggleLikeUnlike",
     context: {
       likedPosts: [],
       prevLikedPost: undefined,
@@ -12,12 +12,11 @@ export const likeMachine = createMachine(
 
     states: {
       idle: {
-        actions: [(context, event) => console.log("CTX", context.likedPosts)],
         on: {
-          LIKED: { target: "toggleLikeUlike" },
+          LIKED: { target: "toggleLikeUnlike" },
         },
       },
-      toggleLikeUlike: {
+      toggleLikeUnlike: {
         invoke: {
           src: "persistLikedPost",
           onDone: {

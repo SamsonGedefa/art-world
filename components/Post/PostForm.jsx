@@ -10,6 +10,7 @@ import axios from "axios";
 import { usePostPages } from "@/lib/post";
 import Tag from "../Tag";
 import Avatar from "../Avatar";
+
 export default function PostForm() {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null);
@@ -39,7 +40,6 @@ export default function PostForm() {
     async (e) => {
       e.preventDefault();
 
-      console.log("TAGs", tags);
       if (!file) {
         toast("Image is required");
         return;
@@ -66,12 +66,11 @@ export default function PostForm() {
         setHandlePost(true);
       }
     },
-    [file, image, mutate, tags]
+    [file, image, mutate, tags, content]
   );
 
   useEffect(() => {
     if (file) {
-      console.log(file);
       let objectURL = URL.createObjectURL(file);
       setImage(objectURL);
     }

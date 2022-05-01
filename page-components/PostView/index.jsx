@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  SinglePost,
+  SinglePostSlider,
   SinglePostInfo,
   PostFigures,
 } from "@/components/PostSingle";
@@ -17,7 +17,7 @@ export default function UserPost({ post }) {
   }
   return (
     <div className="flex flex-col items-center">
-      <SinglePost key={post._id} post={post} />
+      <SinglePostSlider key={post._id} post={post} />
       <SinglePostInfo post={post} />
       <PostFigures post={post} />
       <TagDisplay tags={tags} />
