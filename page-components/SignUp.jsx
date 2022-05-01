@@ -52,11 +52,11 @@ export default function SignUp() {
         <h1>Sign Up</h1>
         <form onSubmit={onSubmit}>
           <div className={styles.control}>
-            <label htmlFor="email">Your Email</label>
+            <label htmlFor="email">Email</label>
             <input type="email" id="email" required ref={emailRef} />
           </div>
           <div className={styles.control}>
-            <label htmlFor="password">Your Password</label>
+            <label htmlFor="password">Password</label>
             <input type="password" id="password" required ref={passwordRef} />
           </div>
           <div className={styles.control}>

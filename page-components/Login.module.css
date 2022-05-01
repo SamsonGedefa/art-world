@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #000000;
   }
 
 .main {
@@ -18,7 +19,7 @@
   
     text-align: start;
    
-    max-height: 450px;
+    max-height: 650px;
   }
   
   .main h1 {
@@ -37,11 +38,12 @@
     color: white;
     font-weight: bold;
     margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
   }
   
   .control input {
     font: inherit;
-    background-color: #f1e1fc;
+    background-color: white;
     color: #000000;
     border-radius: 4px;
     border: 1px solid white;
@@ -53,17 +55,18 @@
   .actions button {
     cursor: pointer;
     font: inherit;
+    font-weight: bold;
     color: white;
-    background-color: #e65a5a;
-    border: 1px solid #e65a5a;
+    background-color: #6bb78d;
+    border: 1px solid #47f093;
     border-radius: 4px;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     padding: 0.5rem 2.5rem;
   }
 
 
   .actions button:hover {
-    background-color: #e06a6a;
-    border-color: #e06a6a;
+    background-color: #47f093;
+    border-color: #47f093;
   }
   
