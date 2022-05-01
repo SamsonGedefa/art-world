@@ -4,8 +4,11 @@ import { usePostPages } from "../lib/post";
 import Link from "next/link";
 import { AiOutlineReload } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { searchState } from "@/atoms/searchAtom";
+import { useRecoilValue } from "recoil";
 
 export default function Feed() {
+  const searchTerm = useRecoilValue(searchState);
   const [deferPageLoadSSR, setDeferPageLoadSSR] = useState(false);
 
   useEffect(() => {
@@ -21,8 +24,36 @@ export default function Feed() {
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : [];
-
-  return (
+  const searchResultsArray = posts.filter((post) => post._id == searchTerm);
+  if (searchTerm != "" ) {
+    return (
+      <div className="flex-grow h-full px-10 ">
+        <ul className="flex flex-wrap space-x-2 space-y-2">
+        
+            {deferPageLoadSSR && searchResultsArray.map((post) => (
+                <Link
+                  key={post._id}
+                  href={`/user/${post.creator.username}/post/${post._id}`}
+                  passHref
+                >
+                  <Post post={post} />
+                </Link>
+            ))}
+        </ul>
+  
+        <button
+          disabled={isLoadingMore || isReachingEnd}
+          onClick={() => setSize(size + 1)}
+          className="bg-[#e65a5a] rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left w-44 h-14 text-center"
+        >
+          {isLoadingMore
+            ? "Loading..."
+            : isReachingEnd
+            ? "No more posts"
+            : "Load more"}
+        </button>
+      </div>
+  )} else { return (
     <div className="flex-grow h-full px-10 ">
       <ul className="flex flex-wrap space-x-2 space-y-2">
         {deferPageLoadSSR &&
@@ -62,4 +93,5 @@ export default function Feed() {
       )}
     </div>
   );
+}
 }
