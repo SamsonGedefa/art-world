@@ -4,8 +4,11 @@ import { usePostPages } from "../lib/post";
 import Link from "next/link";
 import { AiOutlineReload } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { searchState } from "@/atoms/searchAtom";
+import { useRecoilValue } from "recoil";
 
 export default function Feed() {
+  const searchTerm = useRecoilValue(searchState);
   const [deferPageLoadSSR, setDeferPageLoadSSR] = useState(false);
 
   useEffect(() => {
@@ -22,7 +25,25 @@ export default function Feed() {
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : [];
 
-  return (
+  if (searchTerm != "" ) {
+    const searchResultsArray = posts.filter((post) => post.tags.includes(searchTerm));
+    return (
+      <div className="flex-grow h-full px-10 ">
+        <ul className="flex flex-wrap space-x-2 space-y-2">
+        
+            {deferPageLoadSSR && searchResultsArray.map((post) => (
+                <Link
+                  key={post._id}
+                  href={`/user/${post.creator.username}/post/${post._id}`}
+                  passHref
+                >
+                  <Post post={post} />
+                </Link>
+            ))}
+        </ul>
+      </div>
+  )} else {
+     return (
     <div className="flex-grow h-full px-10 ">
       <ul className="flex flex-wrap space-x-2 space-y-2">
         {deferPageLoadSSR &&
@@ -62,4 +83,5 @@ export default function Feed() {
       )}
     </div>
   );
+}
 }

@@ -9,6 +9,8 @@ import { IoMdAdd } from "react-icons/io";
 import { navMenuState } from "atoms/navMenuAtom";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import SearchBar from "./SearchBar";
+
 export default function Nav() {
   const [modalOpen, setModalOpen] = useRecoilState(modalState);
   const [menuOpen, setMenuOpen] = useRecoilState(navMenuState);
@@ -33,7 +35,9 @@ export default function Nav() {
           </a>
         </Link>
       </div>
-
+      <div className="flex justify-center mt-auto ml-auto mb-auto mr-10 items-center">
+        <SearchBar/>
+      </div>
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
