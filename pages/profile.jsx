@@ -3,13 +3,14 @@ import { Layout } from "../components/Layout";
 import Profile from "../page-components/Profile";
 import { getSession, useSession } from "next-auth/react";
 import { findUserByUsername } from "@/lib/db/user";
-
+import Hero from "../page-components/UserPost/Hero"
 export default function Profiles({user}) {
   const { data: session, status } = useSession()
   if (status === "authenticated") {
     return (
         <div>
             <Head />
+            <Hero user={user} />
             <Profile user={user}/>
         </div>
     )

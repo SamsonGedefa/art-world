@@ -9,13 +9,13 @@ import { ObjectID } from "mongodb";
 export default async (req, res) => {
   // const session= getSession({req})
   const { db } = await connectToDatabase();
-  const { id, bio, email, password} = req.body;
+  const { id, bio, email, password, username} = req.body;
   // if bio, email is not
   const hashedPassword = await bcrypt.hash(password, 10);
 
 
   try {
-   const user = await db.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {$set : { bio, email, hashedPassword }});
+   const user = await db.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {$set : { bio, email, hashedPassword, username }});
  } catch (e) {
    console.error(e);
  } 

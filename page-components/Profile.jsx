@@ -1,10 +1,10 @@
 import { useState, useRef, useCallback } from "react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import styles from "./Login.module.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import Hero from "../page-components/UserPost/Hero"
+
 
 export default function Profile ({user}) {
     const router = useRouter();
@@ -50,14 +50,15 @@ export default function Profile ({user}) {
         } catch (e) {
           toast.error(e.message, { autoClose: 1000 });
         } finally {
-          toast('Returning home ...', { autoClose: 1000 });
+          toast('Logging out ...', { autoClose: 1000 });
+          signOut()
           router.push("/login"); 
         }
     };
 
     return (
       <div className="flex flex-col h-full">
-      <Hero user={user} />
+
       <div className="flex-grow h-full px-10 ">
       <div className="my-10 space-y-4">
         <h2 className="text-5xl text-white">Edit Account</h2>
@@ -141,8 +142,6 @@ export default function Profile ({user}) {
 
         </div>
         }
-
-
           </div>
         </div>
         
