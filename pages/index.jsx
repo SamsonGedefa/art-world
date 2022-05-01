@@ -25,11 +25,7 @@ export default function Home({ user }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-
   const user = await findUserByUsername(session.user.username);
-
-  // const user = session.user;
-
   if (!user) {
     return {
       notFound: true,
