@@ -68,42 +68,42 @@ export default function Profile ({user}) {
       <div className="flex flex-col h-full">
       <Hero user={user} />
       <div className="flex-grow h-full px-10 ">
-      <div className="my-10 text-white space-y-4">
-        <h2 className="text-5xl">Edit Account</h2>
+      <div className="my-10 space-y-4">
+        <h2 className="text-5xl text-white">Edit Account</h2>
         {editProfile ? <div>
           <form className="flex"  onSubmit={handleSubmit}>
-            <div className="flex flex-col ">
-              <label className=" m-2" htmlFor="user">
+            <div className="flex flex-col text-white">
+              <label className="uppercase m-2" htmlFor="user">
               Username
               </label>
-              <label className=" m-2" htmlFor="password">
+              <label className="uppercase m-2" htmlFor="password">
               Password
               </label>
-              <label className="m-2" htmlFor="email">
+              <label className="uppercase m-2" htmlFor="email">
               Email
               </label>
-              <label className=" m-2" htmlFor="bio">
+              <label className="uppercase m-2" htmlFor="bio">
               Bio
               </label>
             </div> 
-            <div className="flex flex-col text-black">
+            <div className="flex flex-col text-black ">
               <input 
-                className="m-2 text-grey"
+                className="m-2 rounded-lg"
                 type="username"
                 name="username"
-                placeholder={user.username}
+                placeholder="asshole"
                 value={data.username}
                 onChange={handleChange}
               />
               <input 
-                className="m-2 text-black"
+                className="m-2 rounded-lg"
                 type="password"
                 name="password"
                 value={data.password}
                 onChange={handleChange}
               />
               <input
-                className="m-2 text-black"
+                className="m-2 rounded-lg"
                 type="email"
                 name="email"
                 placeholder={user.email}
@@ -111,7 +111,7 @@ export default function Profile ({user}) {
                 onChange={handleChange}
               />
               <textarea
-                className="m-2 text-black"
+                className="m-2 rounded-lg"
                 type="bio"
                 name="bio"
                 placeholder="Tell me about yourself"
@@ -138,10 +138,10 @@ export default function Profile ({user}) {
             </div>
 
         </div> 
-        : <div className="flex flex-col">
-            <label className="text-white" htmlFor="user">Username: {user.username}</label>
-            <label className="text-white" htmlFor="user">Email: {user.email}</label>
-            <label className="text-white" htmlFor="user">Bio: {user.bio}</label>
+        : <div className="flex flex-col text-white">
+            <label className="p-2 " htmlFor="user">Username: {user.username}</label>
+            <label className="p-2" htmlFor="user">Email: {user.email}</label>
+            <label className="p-2" htmlFor="user">Bio: {user.bio}</label>
             <div className="flex justify-around p-2">
               <button onClick={handleEdit}
                 className="bg-[#5dec9e] flex-auto  text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"

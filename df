@@ -1,0 +1,216 @@
+[33mcommit fa7670dc6bb187e8575cc6164107557005942fa3[m[33m ([m[1;36mHEAD -> [m[1;32m39-create-profile-page-allow-user-to-edit-their-information[m[33m, [m[1;31morigin/39-create-profile-page-allow-user-to-edit-their-information[m[33m)[m
+Author: Rec2 <39541952+rec2@users.noreply.github.com>
+Date:   Sun May 1 11:34:22 2022 -0500
+
+    add profile page
+
+[33mcommit d632061f8940e8ea32573d4f6e5773ba7799dbc2[m
+Merge: 800f150 a4bf795
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Wed Apr 27 08:24:49 2022 -0500
+
+    Merge pull request #20 from SamsonGedefa/17-update-page-with-link-back-to-home
+    
+    add working customized 404 Page
+
+[33mcommit 800f150415cdea2cbf4b540993084de0f1d6b85f[m
+Merge: e3f93db cac4014
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Wed Apr 27 08:20:04 2022 -0500
+
+    Merge pull request #36 from SamsonGedefa/like-unlike-button
+    
+    fixed some bug related to rehydrating liked state on page load
+
+[33mcommit cac4014de103753654058ccc5e9ca1f6a6f5b6fb[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Wed Apr 27 08:19:07 2022 -0500
+
+    fixed some bug related to rehydrating liked state on page load
+
+[33mcommit e3f93db808e7dfea448bed37cb0f5bac2bb9bcc5[m
+Merge: a5dcab3 f5ccf14
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Tue Apr 26 22:30:44 2022 -0500
+
+    Merge pull request #35 from SamsonGedefa/like-unlike-button
+    
+    Like unlike button
+
+[33mcommit f5ccf1475ae8199e7caefab3223bd2176f580cc4[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Tue Apr 26 22:28:06 2022 -0500
+
+    responsive like and unlike toggle icon added
+
+[33mcommit a4bf795e28c1dfb486c266fdb4c660713328bdc5[m
+Author: Rec2 <39541952+rec2@users.noreply.github.com>
+Date:   Tue Apr 12 02:09:36 2022 -0500
+
+    add working customized 404 Page
+
+[33mcommit a961dfa6482df5e94f7c77b2b1ebb65a8df85549[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Tue Apr 5 18:53:23 2022 -0500
+
+    like and ulike button added
+
+[33mcommit 620903ca518bbc0569965362c45275ba7d2733cd[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Thu Mar 31 12:11:52 2022 -0500
+
+    add hover pointer to post
+
+[33mcommit a5dcab365d54dc34e1157d68a8f839747f148914[m[33m ([m[1;31morigin/30-fix-loginsign-up-ui[m[33m, [m[1;31morigin/28-create-profile-page-allow-user-to-edit-their-information[m[33m, [m[1;31morigin/12-reusable-button[m[33m)[m
+Merge: 9b7ad98 2e3f7af
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Thu Mar 31 11:51:39 2022 -0500
+
+    Merge pull request #14 from SamsonGedefa/responsive-photo-layout
+    
+    updated feed layout, added padding to user overlay
+
+[33mcommit 2e3f7af8dc5fa5818cda0ba27faadb9fe1414137[m
+Author: Rec2 <39541952+rec2@users.noreply.github.com>
+Date:   Wed Mar 30 00:28:52 2022 -0500
+
+    updated feed layout, added padding to user overlay
+
+[33mcommit 9b7ad988d8b126363fe6c8ed030b42350f13a75e[m
+Merge: c5b6775 9458437
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Tue Mar 29 17:21:59 2022 -0500
+
+    Merge pull request #13 from SamsonGedefa/post
+    
+    ui update
+
+[33mcommit 94584370aba81492a149ee738fed662d4658ed49[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Tue Mar 29 17:21:13 2022 -0500
+
+    ui update
+
+[33mcommit c5b67750191d4dd43c825857685a222d2ca4af49[m
+Merge: c71cb76 d782e20
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Thu Mar 24 09:15:10 2022 -0500
+
+    Merge pull request #10 from SamsonGedefa/post
+    
+    ui update
+
+[33mcommit d782e205f16586e2aaa91e782904747e39f04247[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Thu Mar 24 09:14:00 2022 -0500
+
+    refactored
+
+[33mcommit 0630a497787659fae9c3469d1c10a2ca193a989c[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Thu Mar 24 09:07:57 2022 -0500
+
+    image grid update
+
+[33mcommit acb9c1adefa56358f06eb242f17ebf1685371b5b[m
+Merge: 35e5528 c71cb76
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Thu Mar 24 07:11:33 2022 -0500
+
+    Merge branch 'main' into post
+
+[33mcommit 35e5528610a4eaa3854653ee158d4ad976fccb23[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Wed Mar 23 19:52:14 2022 -0500
+
+    ui update
+
+[33mcommit c71cb768c48aefc2943f7459ae4e2a694e86bb2b[m
+Merge: ae1ca56 9dc7578
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Tue Mar 1 12:36:26 2022 -0600
+
+    Merge pull request #4 from SamsonGedefa/like-feature
+    
+    Like feature
+
+[33mcommit 9dc75788f279dcff9f7ec2f6982d272cd9483f63[m
+Author: rec2 <ztengyang@gmail.com>
+Date:   Sun Feb 27 20:44:05 2022 -0600
+
+    add logo.png
+
+[33mcommit 1ee72dbe26b543a08ce2f8b201dd398b6dbf7347[m
+Author: rec2 <ztengyang@gmail.com>
+Date:   Sun Feb 27 20:08:27 2022 -0600
+
+    add post-interactions
+
+[33mcommit ae1ca564d343b454c23184b7294f34afcb5dd251[m
+Merge: 644ee29 7a8dea6
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Wed Feb 23 10:32:11 2022 -0600
+
+    Merge pull request #3 from SamsonGedefa/pagnation
+    
+    some update
+
+[33mcommit 7a8dea6e42bec984c1997d14fc78e00b9778bc49[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Wed Feb 23 10:25:50 2022 -0600
+
+    some update
+
+[33mcommit 644ee29112afd615e60a8ec476b39fee9ceafeb8[m
+Merge: 37f1815 37f468b
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Fri Feb 11 19:22:07 2022 -0600
+
+    Merge pull request #2 from SamsonGedefa/imageuploads
+    
+    photo uploads to cloudinary
+
+[33mcommit 37f468b5b8025eb6259d695ba257767db11dd941[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Fri Feb 11 19:02:48 2022 -0600
+
+    photo uploads to cloudinary
+
+[33mcommit 37f1815148945c2b83629a364d61df4b0b20eb80[m
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Tue Feb 1 16:20:33 2022 -0600
+
+    Update README.md
+
+[33mcommit b4c4a651ca7dd0acef4cdea7bdf6ac6bf9153c0c[m
+Merge: 21da835 2981bca
+Author: Samson Gedefa <52475188+SamsonGedefa@users.noreply.github.com>
+Date:   Tue Feb 1 14:14:13 2022 -0600
+
+    Merge pull request #1 from SamsonGedefa/auth-backend
+    
+    login and signup working
+
+[33mcommit 2981bca2c755d802fc866b9455dd2ea513013265[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Tue Feb 1 14:10:42 2022 -0600
+
+    login and signup working
+
+[33mcommit 21da8354da3961a15dea0839fe16dea22fa35ffc[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Fri Jan 28 20:38:25 2022 -0600
+
+    added mongodb connection
+
+[33mcommit 31d360e1debee0f1f6262f3389afcc94a13e12ee[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Fri Jan 28 13:56:13 2022 -0600
+
+    added tailwind, mongodb, next-auth, next-connect
+
+[33mcommit 973ec96eb2d71f243a32a1f64f3ed0e280d804ff[m
+Author: Samson Gedefa <samsongedefa@gmail.com>
+Date:   Thu Jan 27 16:55:06 2022 -0600
+
+    Initial commit from Create Next App
