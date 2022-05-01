@@ -2,11 +2,12 @@ import Head from "next/head";
 import UserPost from "@/page-components/PostView";
 import { findPostById } from "../../../../lib/db/post";
 import { Layout } from "@/components/Layout";
-
+import { useEffect, useState } from "react";
 export default function UserPostPage({ post }) {
   if (typeof post.createdAt !== "string") {
     post.createdAt = new Date(post.createdAt);
   }
+
   return (
     <>
       <Head>
