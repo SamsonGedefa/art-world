@@ -17,7 +17,6 @@ export default function PostFigures({ post }) {
     ? data.reduce((acc, val) => [...acc, ...val.comments], [])
     : [];
 
-  console.log(comments);
   useEffect(() => {
     setCommentsCount(comments.length);
   }, [data]);

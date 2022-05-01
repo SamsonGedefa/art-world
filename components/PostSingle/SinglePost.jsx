@@ -1,29 +1,29 @@
 import { usePostPages } from "../../lib/post";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { MdOutlineArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
-
+import Link from "next/link";
 export default function SinglePostSlider({ post }) {
   const [current, setCurrent] = useState(0);
   const [length, setLength] = useState(0);
 
   const { data } = usePostPages({
-    creatorId: post.userId.toString(),
+    creatorId: post.creator._id,
   });
 
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : [];
 
-  useEffect(() => {
+  useCallback(() => {
     setLength(posts.length);
-  }, [data]);
+  }, [posts.length]);
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);
   };
 
-  const preSldide = () => {
+  const prevSlide = () => {
     setCurrent(current === 0 ? length - 1 : current - 1);
   };
 
@@ -34,24 +34,29 @@ export default function SinglePostSlider({ post }) {
           key={index}
           className="flex justify-center items-center max-w-3/4 h-full"
         >
-          <MdOutlineArrowBackIosNew
-            size={60}
-            onClick={preSldide}
-            className="text-white absolute left-0 hover:text-gray-400"
-          />
           {index === current && (
-            <img
-              key={index}
-              className="object-cover max-w-full max-h-full  group-hover:opacity-70"
-              src={p.images}
-              alt={p.content}
-            />
+            <>
+              <Link href={`/user/${p.creator.username}/post/${p._id}`}>
+                <MdOutlineArrowBackIosNew
+                  size={60}
+                  onClick={prevSlide}
+                  className="text-white absolute left-0 hover:text-gray-400"
+                />
+              </Link>
+              <img
+                className="object-cover max-w-full max-h-full  group-hover:opacity-70"
+                src={p.images}
+                alt={p.content}
+              />
+              <Link href={`/user/${p.creator.username}/post/${p._id}`}>
+                <MdArrowForwardIos
+                  size={60}
+                  className="text-white absolute right-0 hover:text-gray-400"
+                  onClick={nextSlide}
+                />
+              </Link>
+            </>
           )}
-          <MdArrowForwardIos
-            size={60}
-            className="text-white absolute right-0 hover:text-gray-400"
-            onClick={nextSlide}
-          />
         </div>
       ))}
     </div>
