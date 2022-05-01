@@ -1,6 +1,6 @@
-import Link from "next/link";
-import Button from "./Post-Interactions/Button";
-import { AiOutlineSearch } from 'react-icons/ai';
+
+import { AiOutlineSearch, AiOutlineClear } from 'react-icons/ai';
+import { FaSearchMinus } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { searchState } from "@/atoms/searchAtom";
 import { useState } from "react";
@@ -8,15 +8,10 @@ import { useState } from "react";
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("")
   const setSearchState = useSetRecoilState(searchState);
-
-  const addSearchTerm = (event) => {
-    event.preventDefault();
-    setSearchState(searchValue);
-  }
-
+  const capitalize = (s) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
   const onSubmit = (event) => {
     event.preventDefault();
-    setSearchState(searchValue);
+    setSearchState(capitalize(searchValue));
     setSearchValue('');
   };
 
@@ -26,20 +21,22 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
-      <form className="p-5 justify-evenly">
-        <input className="text-black" type="text" placeholder="Enter your thing" value={searchValue} onChange={onChange}/>
+    <div className="p-2">
+      <form className="justify-evenly p-2">
+        <input className="text-black rounded-md p-1 mr-2" type="text" placeholder="Search some art" value={searchValue} onChange={onChange}/>
+          <button
+            onClick={onSubmit}
+            className="bg-[#95bca7]  text-white rounded-sm px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+
+          >
+            <AiOutlineSearch size={16} className="" />
+          </button>
+
         <button
           onClick={onSubmit}
-          className="bg-[#5d3]  text-black rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
+          className="border ml-2 text-white rounded-sm px-4 py-1.5 font-bold shadow-md hover:bg-[#DC143C]"
         >
-          Search
-        </button>
-        <button
-          onClick={onSubmit}
-          className="bg-[#5d5e] text-white rounded-xl px-4 py-1.5 font-bold shadow-md hover:bg-[#47f093]"
-        >
-          Clear Search
+            <FaSearchMinus size={15} className="" /> 
         </button>
       </form>
     </div>

@@ -24,8 +24,9 @@ export default function Feed() {
   const posts = data
     ? data.reduce((acc, val) => [...acc, ...val.posts], [])
     : [];
-  const searchResultsArray = posts.filter((post) => post._id == searchTerm);
+
   if (searchTerm != "" ) {
+    const searchResultsArray = posts.filter((post) => post.tags.includes(searchTerm));
     return (
       <div className="flex-grow h-full px-10 ">
         <ul className="flex flex-wrap space-x-2 space-y-2">
@@ -40,20 +41,9 @@ export default function Feed() {
                 </Link>
             ))}
         </ul>
-  
-        <button
-          disabled={isLoadingMore || isReachingEnd}
-          onClick={() => setSize(size + 1)}
-          className="bg-[#e65a5a] rounded-full border border-gray-400 py-2.5 px-3 opacity-80 hover:opacity-100 font-medium w-full text-left w-44 h-14 text-center"
-        >
-          {isLoadingMore
-            ? "Loading..."
-            : isReachingEnd
-            ? "No more posts"
-            : "Load more"}
-        </button>
       </div>
-  )} else { return (
+  )} else {
+     return (
     <div className="flex-grow h-full px-10 ">
       <ul className="flex flex-wrap space-x-2 space-y-2">
         {deferPageLoadSSR &&

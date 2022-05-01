@@ -35,7 +35,9 @@ export default function Nav() {
           </a>
         </Link>
       </div>
-      <SearchBar/>
+      <div className="flex justify-center mt-auto ml-auto mb-auto mr-10 items-center">
+        <SearchBar/>
+      </div>
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
