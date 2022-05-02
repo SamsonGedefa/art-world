@@ -10,7 +10,7 @@ export default function Profile({ user }) {
   const [editProfile, setEditProfile] = useState(false);
   const [data, setData] = useState({
     username: user.username,
-    password: "",
+    password: user.password,
     bio: user.bio,
     email: user.email,
   });
@@ -31,6 +31,7 @@ export default function Profile({ user }) {
         [e.target.name]: value,
       });
     }
+    console.log("Changes to make: ", data)
   };
 
   const handleSubmit = async (e) => {
@@ -50,7 +51,7 @@ export default function Profile({ user }) {
       toast.error(e.message, { autoClose: 1000 });
     } finally {
       toast("Logging out ...", { autoClose: 1000 });
-      signOut();
+      signOut()
       router.push("/login");
     }
   };
