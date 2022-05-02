@@ -13,15 +13,15 @@ export default async (req, res) => {
   // if bio, email is not
   const hashedPassword = await bcrypt.hash(password, 10);
 
-
   try {
-   const user = await db.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {$set : { bio, email, hashedPassword, username }});
+    res.send(password);
+   const user = await db.collection("users").findOneAndUpdate({ _id: ObjectID(id) }, {$set : { bio, username,email, hashedPassword}});
  } catch (e) {
    console.error(e);
  } 
  finally{
    res.send({
-     id, bio, email, password
+     id, bio, email, password, hashedPassword
    })
  }
 }
