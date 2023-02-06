@@ -4,7 +4,6 @@ import { navMenuState } from "../atoms/navMenuAtom";
 import { useRecoilState } from "recoil";
 
 function Tab({ href, text, Icon, isSelected }) {
-  console.log("SELECTED", isSelected);
   const [menuOpen, setMenuOpen] = useRecoilState(navMenuState);
 
   const router = useRouter();

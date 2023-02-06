@@ -7,7 +7,6 @@ export const likeMachine = createMachine(
     initial: "toggleLikeUnlike",
     context: {
       likedPosts: [],
-      prevLikedPost: undefined,
     },
 
     states: {

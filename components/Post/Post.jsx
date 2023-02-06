@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { GlobalStateContext } from "machines/contexts";
 import { useActor } from "@xstate/react";
 import Link from "next/link";
@@ -7,44 +7,61 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useCommentPages } from "@/lib/comment";
 import Avatar from "../Avatar";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
 function Post({ post }) {
+  const { data: session } = useSession();
+  const router = useRouter();
   const globalService = useContext(GlobalStateContext);
   const [state, send] = useActor(globalService.likeService);
   const [liked, setLiked] = useState(false);
   const [likedList, setLikedList] = useState([]);
   const [likeCount, setLikeCount] = useState(null);
   const [commentsCount, setCommentsCount] = useState(null);
-
   const { data } = useCommentPages({ postId: post._id });
 
   const comments = data
     ? data.reduce((acc, val) => [...acc, ...val.comments], [])
     : [];
 
+  const payload = { postId: post._id };
+
   useEffect(() => {
     setCommentsCount(comments.length);
   }, [data]);
 
-  useEffect(() => {
-    setLikeCount(post.likes.length);
-  }, []);
-
-  const payload = { postId: post._id };
-
   const updateState = () => {
-    setLiked(!liked);
+    if (!session) {
+      router.push("/login");
+    }
+
+    // Send event with post id to invoke state transition
+    globalService.likeService.send("LIKED", payload);
+
+    if (liked) {
+      setLikeCount(likeCount - 1);
+      setLiked(false);
+    } else {
+      setLikeCount(likeCount + 1);
+      setLiked(true);
+    }
   };
 
   useEffect(() => {
-    globalService.likeService.send("LIKED", payload);
-  }, [liked]);
-
-  useEffect(() => {
-    likedList.includes(post._id) && setLiked(true);
+    if (session && likedList.includes(post._id)) {
+      setLiked(true);
+    }
   }, [likedList]);
 
   useEffect(() => {
-    setLikedList(state.context.likedPosts);
+    setLikeCount(post.likes.length);
+  }, [post.likes.length]);
+
+  useEffect(() => {
+    if (state) {
+      setLikedList(state.context.likedPosts);
+    }
   }, []);
 
   return (
